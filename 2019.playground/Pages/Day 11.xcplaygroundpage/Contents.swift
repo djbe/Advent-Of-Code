@@ -4,7 +4,7 @@
 import Foundation
 
 final class Panel {
-	typealias Point = Vector<Int>
+	typealias Point = Vector2<Int>
 
 	var data: Grid<Bool>
 	var modifiedPositions: Set<Point> = []

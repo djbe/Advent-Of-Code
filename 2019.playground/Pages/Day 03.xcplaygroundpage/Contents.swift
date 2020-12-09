@@ -2,7 +2,7 @@
 //: # Day 3
 
 struct Path {
-	typealias Point = Vector<Int>
+	typealias Point = Vector2<Int>
 	private let points: [Point]
 
 	init<T: StringProtocol>(instructions: T) {

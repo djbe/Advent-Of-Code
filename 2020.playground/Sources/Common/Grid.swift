@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Grid<T> {
-	public typealias Point = Vector<Int>
+	public typealias Point = Vector2<Int>
 	public var data: [[T]]
 
 	public init(_ data: [[T]]) {

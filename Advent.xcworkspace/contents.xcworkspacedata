@@ -7,80 +7,9 @@
    <FileRef
       location = "group:2019.playground">
    </FileRef>
-   <Group
-      location = "group:Common"
-      name = "Common">
-      <FileRef
-         location = "group:Logging.swift">
-      </FileRef>
-      <FileRef
-         location = "group:String Manipulation.swift">
-      </FileRef>
-      <FileRef
-         location = "group:Helpers.swift">
-      </FileRef>
-      <FileRef
-         location = "group:Vector.swift">
-      </FileRef>
-      <FileRef
-         location = "group:Chunked By Size.swift">
-      </FileRef>
-      <FileRef
-         location = "group:Grid.swift">
-      </FileRef>
-      <FileRef
-         location = "group:Numerics.swift">
-      </FileRef>
-      <Group
-         location = "group:swift-algorithms"
-         name = "swift-algorithms">
-         <FileRef
-            location = "group:SlidingWindows.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Chunked.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Trim.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Permutations.swift">
-         </FileRef>
-         <FileRef
-            location = "group:SortedPrefix.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Unique.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Chain.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Indexed.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Intersperse.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Cycle.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Combinations.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Rotate.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Partition.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Product.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Stride.swift">
-         </FileRef>
-      </Group>
-   </Group>
+   <FileRef
+      location = "group:Common">
+   </FileRef>
    <FileRef
       location = "group:License.md">
    </FileRef>
