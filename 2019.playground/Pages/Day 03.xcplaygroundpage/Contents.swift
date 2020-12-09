@@ -2,12 +2,7 @@
 //: # Day 3
 
 struct Path {
-	struct Point: Equatable, Hashable {
-		let x: Int
-		let y: Int
-		static let zero = Point(x: 0, y: 0)
-	}
-
+	typealias Point = Vector<Int>
 	private let points: [Point]
 
 	init<T: StringProtocol>(instructions: T) {
