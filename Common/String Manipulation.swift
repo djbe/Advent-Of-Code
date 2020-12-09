@@ -1,15 +1,14 @@
 import Foundation
 
-/// Allow for easier loading of input files, which are always multiline text files
-public func loadInputFile(_ name: String, separator: Character = "\n", omittingEmptySubsequences: Bool = true) -> [String.SubSequence] {
-	let path = Bundle.main.path(forResource: "input", ofType: "txt")!
-	return try! String(contentsOfFile: path).split(separator: separator, omittingEmptySubsequences: omittingEmptySubsequences)
-}
-
 extension StringProtocol {
 	/// Easy access to character at offset
 	public subscript(offset: Int) -> Element {
 		self[index(startIndex, offsetBy: offset)]
+	}
+
+	public subscript(safe offset: Int) -> Element? {
+		guard offset >= 0 && offset < count else { return nil }
+		return self[index(startIndex, offsetBy: offset)]
 	}
 
 	/// Check if this string matches the given regular expression
