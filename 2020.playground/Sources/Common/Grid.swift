@@ -15,7 +15,12 @@ public extension Grid {
 	}
 
 	subscript(point: Point) -> T {
-		data[point.y][point.x]
+		get {
+			data[point.y][point.x]
+		}
+		set {
+			data[point.y][point.x] = newValue
+		}
 	}
 
 	/// Iterate over all available positions

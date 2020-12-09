@@ -25,7 +25,7 @@ public final class Channel<T> {
 		semaphore.signal()
 	}
 
-	func receive() -> T? {
+	public func receive() -> T? {
 		var element: T?
 
 		semaphore.wait()
