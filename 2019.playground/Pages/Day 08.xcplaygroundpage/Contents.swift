@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 8
+//: # Day 8: Space Image Format
 
 import Foundation
 

@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 5
+//: # Day 5: Sunny with a Chance of Asteroids
 
 let input = loadInputFile("input")
 let program = Program(code: input)

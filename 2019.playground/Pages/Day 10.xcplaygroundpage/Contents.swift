@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 10
+//: # Day 10: Monitoring Station
 
 import Foundation
 

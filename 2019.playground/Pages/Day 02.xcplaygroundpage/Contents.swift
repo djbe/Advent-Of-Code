@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 2
+//: # Day 2: 1202 Program Alarm
 
 let input = loadInputFile("input")
 var program = Program(code: input)

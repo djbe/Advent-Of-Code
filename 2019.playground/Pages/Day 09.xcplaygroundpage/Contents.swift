@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 9
+//: # Day 9: Sensor Boost
 
 let input = loadInputFile("input")
 let program = Program(code: input)

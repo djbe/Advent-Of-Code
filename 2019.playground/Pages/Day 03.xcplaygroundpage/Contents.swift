@@ -1,5 +1,5 @@
 //: [Previous Day](@previous)
-//: # Day 3
+//: # Day 3: Crossed Wires
 
 struct Path {
 	typealias Point = Vector2<Int>
