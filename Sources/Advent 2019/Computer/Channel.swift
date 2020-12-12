@@ -79,3 +79,49 @@ extension BlockingChannel {
 		self.init(data: data)
 	}
 }
+
+// MARK: - Callback channel
+
+final class CallbackChannel: Channel {
+	private let generator: (() -> Int)?
+	private let receiver: (([Int]) -> Void)?
+	private var receivedData: [Int] = []
+	private let receiverChunkSize: Int
+
+	init(generator: (() -> Int)? = nil, receiver: (([Int]) -> Void)? = nil, chunkedBy receiverChunkSize: Int) {
+		self.generator = generator
+		self.receiver = receiver
+		self.receiverChunkSize = receiverChunkSize
+	}
+
+	func send(_ value: Int) {
+		guard let receiver = receiver else { fatalError("Need receiver callback!") }
+		receivedData.append(value)
+		if receivedData.count == receiverChunkSize {
+			receiver(receivedData)
+			receivedData = []
+		}
+	}
+
+	func receive() -> Int {
+		guard let generator = generator else { fatalError("Need generator callback!") }
+		return generator()
+	}
+
+	func receiveLast() -> Int {
+		guard let generator = generator else { fatalError("Need generator callback!") }
+		return generator()
+	}
+
+	var contents: [Int] {
+		guard let generator = generator else { fatalError("Need generator callback!") }
+		return [generator()]
+	}
+}
+
+extension CallbackChannel {
+	convenience init(generator: (() -> Int)? = nil, receiver: ((Int) -> Void)? = nil) {
+		let wrappedReceiver: (([Int]) -> Void)? = receiver.map { callback in { callback($0[0]) } }
+		self.init(generator: generator, receiver: wrappedReceiver, chunkedBy: 1)
+	}
+}
