@@ -9,8 +9,8 @@ import Foundation
 
 private struct Circuit {
 	private let computers: [Computer]
-	private let channels: [Channel<Int>]
-	private let outputChannel: Channel<Int>
+	private let channels: [BlockingChannel]
+	private let outputChannel: BlockingChannel
 
 	func run(start: Int = 0) -> Int {
 		let group = DispatchGroup()
@@ -39,7 +39,7 @@ struct Day07: Day {
 
 extension Circuit {
 	static func makeSequence(program: Program, settings: [Int]) -> Circuit {
-		let channels = settings.map { Channel($0) } + [Channel()]
+		let channels = settings.map { BlockingChannel($0) } + [BlockingChannel()]
 		let computers = zip(channels, channels.dropFirst()).map { input, output in
 			Computer(program, input: input, output: output)
 		}
@@ -63,7 +63,7 @@ extension Day07 {
 
 extension Circuit {
 	static func makeLoop(program: Program, settings: [Int]) -> Circuit {
-		let channels = settings.map { Channel($0) }
+		let channels = settings.map { BlockingChannel($0) }
 		let computers = zip(0..., channels).map { index, input in
 			Computer(program, input: input, output: channels[(index + 1) % channels.count])
 		}

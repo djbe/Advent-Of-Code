@@ -7,10 +7,10 @@ import Foundation
 
 final class Computer {
 	private var memory: Memory
-	private let input: Channel<Int>
-	private var output: Channel<Int>
+	private let input: Channel
+	private var output: Channel
 
-	init(_ program: Program, input: Channel<Int> = Channel(), output: Channel<Int> = Channel()) {
+	init(_ program: Program, input: Channel = BlockingChannel(), output: Channel = BlockingChannel()) {
 		memory = Memory(program: program)
 		self.input = input
 		self.output = output

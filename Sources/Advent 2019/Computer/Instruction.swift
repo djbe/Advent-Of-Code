@@ -43,7 +43,7 @@ struct Instruction {
 
 extension Instruction {
 	// swiftlint:disable:next cyclomatic_complexity
-	func execute(memory: Memory, input: Channel<Int>, output: Channel<Int>) {
+	func execute(memory: Memory, input: Channel, output: Channel) {
 		var pointer = memory.pointer
 
 		log(.debug, "\(pointer) \(description(with: memory))")
@@ -56,8 +56,7 @@ extension Instruction {
 			let value = memory[pointer, 1, modes]
 			output.send(value)
 		case .write:
-			guard let value = input.receive() else { fatalError("No value in input channel!") }
-			memory[pointer, 1, modes] = value
+			memory[pointer, 1, modes] = input.receive()
 		case .jumpIfTrue:
 			if memory[pointer, 1, modes] != 0 {
 				pointer = memory[pointer, 2, modes]

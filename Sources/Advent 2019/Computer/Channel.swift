@@ -5,13 +5,22 @@
 
 import Foundation
 
-final class Channel<T> {
-	private var data: [T]
+protocol Channel {
+	func send(_ value: Int)
+	func receive() -> Int
+	func receiveLast() -> Int
+	var contents: [Int] { get }
+}
+
+// MARK: - Blocking channel (with semaphores)
+
+final class BlockingChannel: Channel {
+	private var data: [Int]
 	private var used: Int = 0
 	private let semaphore: DispatchSemaphore
 	private let queue = DispatchQueue(label: "Channel-\(UUID().uuidString)", attributes: .concurrent)
 
-	init(data: [T] = []) {
+	init(data: [Int] = []) {
 		self.data = data
 		semaphore = .init(value: data.count)
 	}
@@ -23,15 +32,15 @@ final class Channel<T> {
 		}
 	}
 
-	func send(_ value: T) {
+	func send(_ value: Int) {
 		queue.async(flags: .barrier) {
 			self.data.append(value)
 		}
 		semaphore.signal()
 	}
 
-	func receive() -> T? {
-		var element: T?
+	func receive() -> Int {
+		var element: Int!
 
 		semaphore.wait()
 		queue.sync(flags: .barrier) {
@@ -42,8 +51,8 @@ final class Channel<T> {
 		return element
 	}
 
-	func receiveLast() -> T {
-		var element: T!
+	func receiveLast() -> Int {
+		var element: Int!
 
 		semaphore.wait()
 		queue.sync(flags: .barrier) {
@@ -54,8 +63,8 @@ final class Channel<T> {
 		return element
 	}
 
-	var contents: [T] {
-		var result: [T] = []
+	var contents: [Int] {
+		var result: [Int] = []
 
 		queue.sync(flags: .barrier) {
 			result = self.data
@@ -65,8 +74,8 @@ final class Channel<T> {
 	}
 }
 
-extension Channel {
-	convenience init(_ data: T...) {
+extension BlockingChannel {
+	convenience init(_ data: Int...) {
 		self.init(data: data)
 	}
 }

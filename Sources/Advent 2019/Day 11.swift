@@ -32,7 +32,7 @@ private final class Panel {
 
 private final class Robot {
 	private struct Camera {
-		let channel = Channel<Int>()
+		let channel = BlockingChannel()
 
 		func scan(panel: Panel, at position: Panel.Point) {
 			channel.send(panel[position] ? 1 : 0)
@@ -52,19 +52,15 @@ private final class Robot {
 
 	func draw(program: Program, on panel: Panel, start: Panel.Point) {
 		position = start
-		let output = Channel<Int>()
+		let output = BlockingChannel()
 		let computer = Computer(program, input: camera.channel, output: output)
 
 		// run IO
 		DispatchQueue.global().async {
 			while true {
 				self.camera.scan(panel: panel, at: self.position)
-				if let color = output.receive() {
-					self.brush.paint(color: color, panel: panel, at: self.position)
-				}
-				if let rotation = output.receive() {
-					self.turn(rotation: rotation)
-				}
+				self.brush.paint(color: output.receive(), panel: panel, at: self.position)
+				self.turn(rotation: output.receive())
 			}
 		}
 
