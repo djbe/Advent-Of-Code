@@ -22,7 +22,7 @@ extension Day09 {
 		let computer = Computer(program, input: BlockingChannel(1), output: output)
 		computer.run()
 
-		return output.contents
+		return output.receiveLast()
 	}
 }
 
@@ -36,6 +36,6 @@ extension Day09 {
 		let computer = Computer(program, input: BlockingChannel(2), output: output)
 		computer.run()
 
-		return output.contents
+		return output.receiveLast()
 	}
 }

@@ -22,7 +22,8 @@ let package = Package(
 		.target(name: "Common", dependencies: [
 			.product(name: "Algorithms", package: "swift-algorithms"),
 			.product(name: "ArgumentParser", package: "swift-argument-parser")
-		])
+		]),
+		.testTarget(name: "AdventTests", dependencies: ["Advent 2019", "Advent 2020"])
 	],
 	swiftLanguageVersions: [.v5]
 )
