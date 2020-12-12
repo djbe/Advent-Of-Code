@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 import Foundation
@@ -46,7 +51,7 @@ extension Day07 {
 	mutating func part1() {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
-		let circuits: [Circuit] = (0...4).map { $0 }.permutations()
+		let circuits: [Circuit] = Array(0...4).permutations()
 			.map { Circuit.makeSequence(program: program, settings: $0) }
 
 		let result = circuits.map { $0.run() }.max() ?? 0
@@ -70,7 +75,7 @@ extension Day07 {
 	mutating func part2() {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
-		let circuits: [Circuit] = (5...9).map { $0 }.permutations()
+		let circuits: [Circuit] = Array(5...9).permutations()
 			.map { Circuit.makeLoop(program: program, settings: $0) }
 
 		let result = circuits.map { $0.run() }.max() ?? 0

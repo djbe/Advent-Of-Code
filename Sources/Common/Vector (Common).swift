@@ -1,4 +1,11 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Foundation
+
+// swiftlint:disable identifier_name
 
 public protocol VectorType: Hashable, ExpressibleByArrayLiteral, CustomStringConvertible {
 	associatedtype Real: Numeric
@@ -25,7 +32,7 @@ public extension VectorType {
 	}
 
 	var squareLength: Real {
-		self.dotProduct(vector: self)
+		dotProduct(vector: self)
 	}
 
 	func dotProduct(vector: Self) -> Real {
@@ -83,7 +90,7 @@ public extension VectorType where Real: BinaryInteger {
 
 public extension VectorType {
 	static func + (v1: Self, v2: Self) -> Self {
-		zipAndCombine(v1, v2, -)
+		zipAndCombine(v1, v2, +)
 	}
 
 	static func - (v1: Self, v2: Self) -> Self {
@@ -125,7 +132,7 @@ public extension VectorType where Real: SignedNumeric {
 
 public extension VectorType {
 	var description: String {
-		"(\(coordinates.map({ String(describing: $0) }).joined(separator: ", ")))"
+		"(\(coordinates.map { String(describing: $0) }.joined(separator: ", ")))"
 	}
 }
 

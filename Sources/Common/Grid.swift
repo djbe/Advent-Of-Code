@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Foundation
 
 public struct Grid<T> {
@@ -30,7 +35,7 @@ public extension Grid {
 
 	/// Iterate over all available positions
 	func iterate() -> [(point: Point, value: T)] {
-		zip(0..., data).flatMap { y, row in zip(0..., row).map { (Point(x: $0, y: y), $1) } }
+		zip(0..., data).flatMap { index, row in zip(0..., row).map { (Point(x: $0, y: index), $1) } }
 	}
 }
 
@@ -40,7 +45,7 @@ public extension Grid {
 		var current = start
 		repeat {
 			current += direction
-			if wrap && current.y < data.count {
+			if wrap, current.y < data.count {
 				current = Point(x: current.x % data[current.y].count, y: current.y)
 			}
 		} while !handler(current)
@@ -50,7 +55,7 @@ public extension Grid {
 	func step(from start: Point, to end: Point, handler: (Point) -> Bool) {
 		let direction = end.angleVector(to: start)
 		step(from: start, direction: direction, wrap: false) {
-			return handler($0)
+			handler($0)
 		}
 	}
 

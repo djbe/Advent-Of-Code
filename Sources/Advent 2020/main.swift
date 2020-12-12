@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import ArgumentParser
 import Common
 import Foundation

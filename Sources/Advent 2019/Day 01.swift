@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Common
 import Foundation
 
@@ -11,12 +16,11 @@ struct Day01: Day {
 
 extension Day01 {
 	func fuelNeeded(for mass: Int) -> Int {
-	   max(Int(floor(Float(mass) / 3) - 2), 0)
+		max(Int(floor(Float(mass) / 3) - 2), 0)
 	}
 
 	mutating func part1() {
 		logPart("What is the sum of the fuel requirements for all of the modules on your spacecraft?")
-
 
 		let total = input.map(fuelNeeded(for:)).reduce(0, +)
 		log(.info, "Total fuel needed: \(total)")

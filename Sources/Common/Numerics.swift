@@ -1,4 +1,13 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Foundation
+
+// swiftlint:disable identifier_name yoda_condition
+
+// MARK: - GCD / LCM
 
 public func gcd<T: BinaryInteger>(_ a: T, _ b: T) -> T {
 	assert(a >= 0 && b >= 0)
@@ -9,8 +18,6 @@ public func gcd<T: BinaryInteger>(_ a: T, _ b: T) -> T {
 
 	var a = a, b = b, n = Int()
 
-	//FIXME: Shift loops are slow and should be opimized.
-
 	// Remove the largest 2ⁿ from them:
 	while (a | b) & 1 == 0 { a >>= 1; b >>= 1; n += 1 }
 
@@ -18,7 +25,6 @@ public func gcd<T: BinaryInteger>(_ a: T, _ b: T) -> T {
 	while a & 1 == 0 { a >>= 1 }
 
 	repeat {
-
 		// Reduce `b` to odd value
 		while b & 1 == 0 { b >>= 1 }
 

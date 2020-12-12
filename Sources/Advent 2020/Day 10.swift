@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -17,7 +22,6 @@ extension Day10 {
 
 		let diffs = Dictionary(grouping: zip(sequence, sequence.dropFirst()).map(-)) { $0 }.mapValues(\.count)
 		log(.info, "Differences in jolts: \(diffs[1, default: 0] * diffs[3, default: 0])")
-
 	}
 }
 
@@ -39,7 +43,7 @@ extension Day10 {
 
 		// find chunks in the sequence that are 3 apart --> where the combinations are
 		var last = 0
-		let chunks = sequence.reversed().map { $0 }.chunked { lhs, rhs in
+		let chunks = Array(sequence.reversed()).chunked { _, rhs in
 			defer { last = rhs }
 			return rhs < last + 3
 		}

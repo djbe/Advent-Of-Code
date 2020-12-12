@@ -1,10 +1,15 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
 struct Day04: Day {
 	var name: String { "Secure Container" }
 
-	private static let range = 382345...843167
+	private static let range = 382_345...843_167
 }
 
 // MARK: - Part 1

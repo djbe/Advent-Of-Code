@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 import Foundation
@@ -80,7 +85,7 @@ private final class Robot {
 struct Day11: Day {
 	var name: String { "Space Police" }
 
-	lazy var program = Program(code: loadInputFile())
+	private lazy var program = Program(code: loadInputFile())
 }
 
 // MARK: - Part 1

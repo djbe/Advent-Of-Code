@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -14,7 +19,7 @@ private struct Passport {
 	}
 
 	static func load<T: StringProtocol>(from input: [T]) -> [Passport] {
-		input.chunked(by: { lhs, rhs in rhs != "" })
+		input.chunked { _, rhs in !rhs.isEmpty }
 			.compactMap(Passport.init)
 	}
 }
@@ -33,7 +38,6 @@ extension Passport {
 	}
 }
 
-
 struct Day04: Day {
 	var name: String { "Passport Processing" }
 
@@ -43,7 +47,7 @@ struct Day04: Day {
 // MARK: - Part 1
 
 extension Passport {
-	private static let mandatoryFields: Set<String> = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"/*, "cid"*/]
+	private static let mandatoryFields: Set<String> = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" /* , "cid" */ ]
 
 	var simpleIsValid: Bool {
 		Self.mandatoryFields.isSubset(of: Set(data.keys))
@@ -85,9 +89,9 @@ enum Validators {
 extension Passport {
 	var isValid: Bool {
 		Self.mandatoryFields.isSubset(of: Set(data.keys)) &&
-			Validators.IntRange(range: 1920...2002).validate(byr) &&
-			Validators.IntRange(range: 2010...2020).validate(iyr) &&
-			Validators.IntRange(range: 2020...2030).validate(eyr) &&
+			Validators.IntRange(range: 1_920...2_002).validate(byr) &&
+			Validators.IntRange(range: 2_010...2_020).validate(iyr) &&
+			Validators.IntRange(range: 2_020...2_030).validate(eyr) &&
 			Validators.Regex(regex: #"^#[0-9a-f]{6}$"#).validate(hcl) &&
 			Validators.Regex(regex: #"^amb|blu|brn|gry|grn|hzl|oth$"#).validate(ecl) &&
 			Validators.Regex(regex: #"^[0-9]{9}$"#).validate(pid) &&

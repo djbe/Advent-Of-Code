@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 import Foundation
@@ -19,7 +24,7 @@ private final class World: CustomStringConvertible {
 	}
 
 	var description: String {
-		seats.iterate().map { $0.value ? (people[$0.point] == 1 ? "#" : "L" ) : "." }.chunks(of: seats.data[0].count).map { $0.joined() }.joined(separator: "\n")
+		seats.iterate().map { $0.value ? (people[$0.point] == 1 ? "#" : "L") : "." }.chunks(of: seats.data[0].count).map { $0.joined() }.joined(separator: "\n")
 	}
 
 	func step(maxAdjacent: Int) -> Bool {
@@ -28,9 +33,9 @@ private final class World: CustomStringConvertible {
 
 		for (seat, adjacent) in seatMap {
 			let sum = adjacent.map { people[$0] }.reduce(0, +)
-			if people[seat] == 0 && sum == 0 {
+			if people[seat] == 0, sum == 0 {
 				result[seat] = 1
-			} else if people[seat] == 1 && sum >= maxAdjacent {
+			} else if people[seat] == 1, sum >= maxAdjacent {
 				result[seat] = 0
 			}
 		}
@@ -55,7 +60,7 @@ private final class World: CustomStringConvertible {
 struct Day11: Day {
 	var name: String { "Seating System" }
 
-	lazy var input = loadInputFile()
+	private lazy var input = loadInputFile()
 }
 
 // MARK: - Part 1
@@ -83,7 +88,7 @@ extension Day11 {
 
 extension Grid where T == Bool {
 	func find(from start: Point, direction: Point) -> Point? {
-		var result: Point? = nil
+		var result: Point?
 		step(from: start, direction: direction, wrap: false) { point in
 			if getValue(at: point, default: false) {
 				result = point

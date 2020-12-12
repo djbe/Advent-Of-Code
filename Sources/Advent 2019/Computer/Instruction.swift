@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Common
 import Foundation
 
@@ -21,8 +26,8 @@ struct Instruction {
 		self.opcode = opcode
 		modes = [
 			Mode(rawValue: value / 100 % 10) ?? .position,
-			Mode(rawValue: value / 1000 % 10) ?? .position,
-			Mode(rawValue: value / 10000 % 10) ?? .position
+			Mode(rawValue: value / 1_000 % 10) ?? .position,
+			Mode(rawValue: value / 10_000 % 10) ?? .position
 		]
 	}
 
@@ -37,6 +42,7 @@ struct Instruction {
 }
 
 extension Instruction {
+	// swiftlint:disable:next cyclomatic_complexity
 	func execute(memory: Memory, input: Channel<Int>, output: Channel<Int>) {
 		var pointer = memory.pointer
 

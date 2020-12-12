@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -63,7 +68,7 @@ extension Computer {
 	func debug() -> (finished: Bool, result: Int) {
 		var alreadyExecuted: Set<Int> = []
 
-		while !alreadyExecuted.contains(pointer) && pointer < program.size {
+		while !alreadyExecuted.contains(pointer), pointer < program.size {
 			alreadyExecuted.insert(pointer)
 			let instruction = program.data[pointer]
 			pointer = instruction.execute(pointer: pointer, accumulator: &accumulator)

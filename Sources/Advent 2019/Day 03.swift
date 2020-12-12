@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -15,10 +20,10 @@ private struct Path {
 		let distance = Int(movement.dropFirst()) ?? 0
 
 		switch movement[0] {
-		case "U": return (point.y..<(point.y+distance)).map { Point(x: point.x, y: $0 + 1) }
-		case "D": return ((point.y-distance+1)...point.y).reversed().map { Point(x: point.x, y: $0 - 1) }
-		case "R": return (point.x..<(point.x+distance)).map { Point(x: $0 + 1, y: point.y) }
-		case "L": return ((point.x-distance+1)...point.x).reversed().map { Point(x: $0 - 1, y: point.y) }
+		case "U": return (point.y..<(point.y + distance)).map { Point(x: point.x, y: $0 + 1) }
+		case "D": return ((point.y - distance + 1)...point.y).reversed().map { Point(x: point.x, y: $0 - 1) }
+		case "R": return (point.x..<(point.x + distance)).map { Point(x: $0 + 1, y: point.y) }
+		case "L": return ((point.x - distance + 1)...point.x).reversed().map { Point(x: $0 - 1, y: point.y) }
 		default: preconditionFailure("Uknown direction \(movement[0])")
 		}
 	}

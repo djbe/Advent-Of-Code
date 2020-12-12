@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Foundation
 
 final class Channel<T> {
@@ -19,7 +24,7 @@ final class Channel<T> {
 	}
 
 	func send(_ value: T) {
-		queue.async(flags:.barrier) {
+		queue.async(flags: .barrier) {
 			self.data.append(value)
 		}
 		semaphore.signal()
@@ -29,7 +34,7 @@ final class Channel<T> {
 		var element: T?
 
 		semaphore.wait()
-		queue.sync(flags:.barrier) {
+		queue.sync(flags: .barrier) {
 			element = self.data.removeFirst()
 			used += 1
 		}
@@ -41,7 +46,7 @@ final class Channel<T> {
 		var element: T!
 
 		semaphore.wait()
-		queue.sync(flags:.barrier) {
+		queue.sync(flags: .barrier) {
 			element = self.data.removeLast()
 			used += 1
 		}
@@ -52,7 +57,7 @@ final class Channel<T> {
 	var contents: [T] {
 		var result: [T] = []
 
-		queue.sync(flags:.barrier) {
+		queue.sync(flags: .barrier) {
 			result = self.data
 		}
 

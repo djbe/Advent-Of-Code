@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 import Foundation
@@ -35,7 +40,7 @@ struct Day07: Day {
 extension RuleSet {
 	func bagsThatCanContain(color: String) -> Set<String> {
 		let set = rules.filter { $0.value[color] != nil }.keys
-		return Set(set + set.flatMap(self.bagsThatCanContain(color:)))
+		return Set(set + set.flatMap(bagsThatCanContain(color:)))
 	}
 }
 

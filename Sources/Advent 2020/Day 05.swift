@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 import Foundation
@@ -15,7 +20,7 @@ private struct BoardingPass {
 		column = Int(data.suffix(3), radix: 2) ?? 0
 	}
 
-	var id: Int {
+	var boardingPassID: Int {
 		row * 8 + column
 	}
 }
@@ -32,7 +37,7 @@ extension Day05 {
 	mutating func part1() {
 		logPart("What is the highest seat ID on a boarding pass?")
 
-		log(.info, "Highest ID: \(passes.map(\.id).max() ?? 0)")
+		log(.info, "Highest ID: \(passes.map(\.boardingPassID).max() ?? 0)")
 	}
 }
 
@@ -42,9 +47,9 @@ extension Day05 {
 	mutating func part2() {
 		logPart("What is the ID of your seat?")
 
-		let existing = Set(passes.map(\.id))
+		let existing = Set(passes.map(\.boardingPassID))
 		let range = (existing.min() ?? 0)...(existing.max() ?? 0)
-		let available = Set(range.map { $0 })
+		let available = Set(range)
 
 		let openSeat = available.subtracting(existing).first ?? 0
 		log(.info, "Open seat: \(openSeat)")

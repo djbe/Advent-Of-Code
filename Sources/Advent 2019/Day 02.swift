@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -41,8 +46,8 @@ extension Day02 {
 	mutating func part2() {
 		logPart("What is 100 * noun + verb?")
 
-		for choice in (0...99).map({ $0 }).combinations(ofCount: 2) {
-			if testModification(noun: choice[0], verb: choice[1]) == 19690720 {
+		for choice in Array(0...99).combinations(ofCount: 2) {
+			if testModification(noun: choice[0], verb: choice[1]) == 19_690_720 {
 				let result = 100 * choice[0] + choice[1]
 				log(.info, "Found combination: \(result)")
 				break

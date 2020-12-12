@@ -1,11 +1,16 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
 struct Day08: Day {
 	var name: String { "Space Image Format" }
 
-	lazy var bytes = loadInputFile()[0].compactMap(\.wholeNumberValue)
-	static let size = 25 * 6
+	private lazy var bytes = loadInputFile()[0].compactMap(\.wholeNumberValue)
+	private static let size = 25 * 6
 }
 
 // MARK: - Part 1

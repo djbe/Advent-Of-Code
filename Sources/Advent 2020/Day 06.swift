@@ -1,10 +1,15 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
 struct Day06: Day {
 	var name: String { "Custom Customs" }
 
-	private lazy var groups = loadInputFile(omittingEmptySubsequences: false).chunked(by: { lhs, rhs in rhs != "" })
+	private lazy var groups = loadInputFile(omittingEmptySubsequences: false).chunked { _, rhs in !rhs.isEmpty }
 }
 
 // MARK: - Part 1

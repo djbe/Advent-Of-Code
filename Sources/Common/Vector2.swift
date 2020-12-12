@@ -1,4 +1,11 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Foundation
+
+// swiftlint:disable identifier_name
 
 public struct Vector2<T: Numeric & Hashable>: VectorType {
 	public var x: T
@@ -35,12 +42,12 @@ public extension Vector2 where T: Numeric {
 		Vector2(x: 0, y: 0)
 	}
 
-	static func -=(lhs: inout Vector2, rhs: Vector2) {
+	static func -= (lhs: inout Vector2, rhs: Vector2) {
 		lhs.x -= rhs.x
 		lhs.y -= rhs.y
 	}
 
-	static func +=(lhs: inout Vector2, rhs: Vector2) {
+	static func += (lhs: inout Vector2, rhs: Vector2) {
 		lhs.x += rhs.x
 		lhs.y += rhs.y
 	}

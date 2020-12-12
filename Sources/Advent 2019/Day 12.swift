@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -42,7 +47,7 @@ private final class System: CustomStringConvertible {
 struct Day12: Day {
 	var name: String { "Sunny with a Chance of Asteroids" }
 
-	lazy var input = loadInputFile()
+	private lazy var input = loadInputFile()
 }
 
 // MARK: - Part 1
@@ -59,7 +64,7 @@ extension Day12 {
 		logPart("What is the total energy in the system after simulating the moons given in your scan for 1000 steps?")
 
 		let system = System(lines: input)
-		for _ in 1...1000 {
+		for _ in 1...1_000 {
 			system.step()
 		}
 		log(.info, "Total energy: \(system.energy)")

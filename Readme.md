@@ -22,3 +22,10 @@ This code is under the MIT License. See the [License.md](License.md) file in thi
 Some parts of this code are powered by:
 
 - [Swift Algorithms](https://github.com/apple/swift-algorithms)
+- [Swift Argument Parser](https://github.com/apple/swift-argument-parser)
+
+There are also some tools in this project, mainly used for maintaining code quality:
+
+- [Komondor](https://github.com/shibapm/Komondor)
+- [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
+- [SwiftLint](https://github.com/realm/SwiftLint)

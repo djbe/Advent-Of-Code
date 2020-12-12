@@ -1,3 +1,8 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
@@ -24,7 +29,7 @@ struct Day06: Day {
 
 extension Map {
 	func checksum(from start: String = "COM", depth: Int = 1) -> Int {
-		return self[start].count * depth +
+		self[start].count * depth +
 			self[start].map { checksum(from: $0, depth: depth + 1) }.reduce(0, +)
 	}
 }
@@ -40,7 +45,11 @@ extension Day06 {
 // MARK: - Part 2
 
 extension Map {
-	func path(from start: String = "COM", to end: String) -> [String] {
+	func path(to end: String) -> [String] {
+		path(from: "COM", to: end)
+	}
+
+	func path(from start: String, to end: String) -> [String] {
 		if let endParent = map.first(where: { $0.value.contains(end) })?.key {
 			return path(from: start, to: endParent) + [endParent]
 		} else {

@@ -1,10 +1,15 @@
+//
+// Advent
+// Copyright © 2020 David Jennes
+//
+
 import Algorithms
 import Common
 
 struct Day09: Day {
 	var name: String { "Sensor Boost" }
 
-	lazy var program = Program(code: loadInputFile())
+	private lazy var program = Program(code: loadInputFile())
 }
 
 // MARK: - Part 1
