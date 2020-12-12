@@ -5,8 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "Advent",
 	products: [
-		.executable(name: "advent-2019", targets: ["Advent 2019"]),
-		.executable(name: "advent-2020", targets: ["Advent 2020"])
+		.executable(name: "advent", targets: ["Advent"])
 	],
 	dependencies: [
 		.package(url: "https://github.com/apple/swift-algorithms", .branch("main")),
@@ -17,6 +16,7 @@ let package = Package(
 		.package(url: "https://github.com/realm/SwiftLint", from: "0.41.0")
 	],
 	targets: [
+		.target(name: "Advent", dependencies: ["Advent 2019", "Advent 2020"]),
 		.target(name: "Advent 2019", dependencies: ["Common"], resources: [.process("Input")]),
 		.target(name: "Advent 2020", dependencies: ["Common"], resources: [.process("Input")]),
 		.target(name: "Common", dependencies: [
