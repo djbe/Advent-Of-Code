@@ -48,24 +48,23 @@ struct Day03: Day {
 // MARK: - Part 1
 
 extension Day03 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the Manhattan distance from the central port to the closest intersection?")
 
 		intersections = paths[0].intersections(with: paths[1])
-		let closestIntersection = intersections.map { abs($0.x) + abs($0.y) }.min() ?? .max
-		log(.info, "Closest intersection: \(closestIntersection)")
+
+		return intersections.map(\.manhattanLength).min() ?? 0
 	}
 }
 
 // MARK: - Part 2
 
 extension Day03 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the fewest combined steps the wires must take to reach an intersection?")
 
-		let stepsToOptimal = intersections
+		return intersections
 			.map { point in paths.map { $0.stepsTaken(for: point) }.reduce(0, +) }
 			.min() ?? .max
-		log(.info, "Steps to optimal intersection: \(stepsToOptimal)")
 	}
 }

@@ -22,14 +22,14 @@ struct Day02: Day {
 // MARK: - Part 1
 
 extension Day02 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What value is left at position 0 after the program halts?")
 
 		program.set(noun: 12, verb: 2)
 		let computer = Computer(program)
 		computer.run()
 
-		log(.info, "Result after execution: \(computer.firstMemoryByte)")
+		return computer.firstMemoryByte
 	}
 }
 
@@ -43,15 +43,11 @@ extension Day02 {
 		return computer.firstMemoryByte
 	}
 
-	mutating func part2() {
-		logPart("What is 100 * noun + verb?")
+	mutating func part2() -> Any {
+		logPart("Find the input noun and verb that cause the program to produce the output 19690720. What is 100 * noun + verb?")
 
-		for choice in Array(0...99).combinations(ofCount: 2) {
-			if testModification(noun: choice[0], verb: choice[1]) == 19_690_720 {
-				let result = 100 * choice[0] + choice[1]
-				log(.info, "Found combination: \(result)")
-				break
-			}
-		}
+		return Array(0...99).combinations(ofCount: 2)
+			.first { testModification(noun: $0[0], verb: $0[1]) == 19_690_720 }
+			.map { 100 * $0[0] + $0[1] } ?? 0
 	}
 }

@@ -46,14 +46,12 @@ extension PasswordPolicy {
 }
 
 extension Day02 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("How many passwords are valid according to their policies?")
 
-		let result = parsed
+		return parsed
 			.map { $0.policy.validateOld($0.remainder) ? 1 : 0 }
 			.reduce(0, +)
-
-		log(.info, "Valid passwords (old): \(result)")
 	}
 }
 
@@ -70,13 +68,11 @@ extension PasswordPolicy {
 }
 
 extension Day02 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("How many passwords are valid according to the new interpretation of the policies?")
 
-		let result = parsed
+		return parsed
 			.map { $0.policy.validateNew($0.remainder) ? 1 : 0 }
 			.reduce(0, +)
-
-		log(.info, "Valid passwords (new): \(result)")
 	}
 }

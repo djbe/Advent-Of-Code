@@ -75,4 +75,8 @@ public extension Vector2 where T: SignedNumeric & BinaryInteger {
 			y: T(round(sin(angle) * Float(x) + cos(angle) * Float(y)))
 		)
 	}
+
+	var manhattanLength: T {
+		abs(x) + abs(y)
+	}
 }

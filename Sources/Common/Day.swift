@@ -9,8 +9,8 @@ import Foundation
 public protocol Day: ParsableCommand {
 	var name: String { get }
 
-	mutating func part1()
-	mutating func part2()
+	mutating func part1() -> Any
+	mutating func part2() -> Any
 }
 
 public extension Day {
@@ -20,8 +20,8 @@ public extension Day {
 
 		logDay(day, name)
 
-		part1()
-		part2()
+		print("Part 1 result: \(part1())")
+		print("Part 2 result: \(part2())")
 
 		print()
 	}

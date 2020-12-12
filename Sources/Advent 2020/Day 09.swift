@@ -24,11 +24,11 @@ extension Day09 {
 		}?.last
 	}
 
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the first number that does not have this property?")
 
 		invalidNumber = check(sequence: numbers, history: 25) ?? 0
-		log(.info, "Non-matching number: \(invalidNumber)")
+		return invalidNumber
 	}
 }
 
@@ -44,11 +44,12 @@ extension Day09 {
 		return []
 	}
 
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the encryption weakness in your XMAS-encrypted list of numbers?")
 
 		let result = findWeakness(sequence: numbers, invalid: invalidNumber)
-		let weakness = (result.min() ?? 0) + (result.max() ?? 0)
-		log(.info, "Found weakness: \(result) --> \(weakness)")
+		log(.info, "Found weakness: \(result)")
+
+		return (result.min() ?? 0) + (result.max() ?? 0)
 	}
 }

@@ -74,13 +74,13 @@ extension World {
 }
 
 extension Day11 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("Simulate your seating area by applying the seating rules repeatedly until no seats change state. How many seats end up occupied?")
 
 		let world = World(lines: input, seatFinder: World.seatsAdjacent(to:seats:))
 		world.stepUntilStable(maxAdjacent: 4)
 
-		log(.info, "Occupied seats: \(world.occupiedSeats)")
+		return world.occupiedSeats
 	}
 }
 
@@ -106,12 +106,12 @@ extension World {
 }
 
 extension Day11 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("Given the new visibility method and the rule change for occupied seats becoming empty, once equilibrium is reached, how many seats end up occupied?")
 
 		let world = World(lines: input, seatFinder: World.seatsWithLineOfSight(to:seats:))
 		world.stepUntilStable(maxAdjacent: 5)
 
-		log(.info, "Occupied seats: \(world.occupiedSeats)")
+		return world.occupiedSeats
 	}
 }

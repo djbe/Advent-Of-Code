@@ -87,12 +87,13 @@ struct Day08: Day {
 // MARK: - Part 1
 
 extension Day08 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("Immediately before any instruction is executed a second time, what value is in the accumulator?")
 
 		let computer = Computer(program: program)
 		let result = computer.debug()
-		log(.info, "Result after debugging: \(result.result)")
+
+		return result.result
 	}
 }
 
@@ -115,7 +116,7 @@ extension Program {
 }
 
 extension Day08 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the value of the accumulator after the program terminates?")
 
 		let program = self.program
@@ -127,6 +128,6 @@ extension Day08 {
 			}
 			.first { $0.finished }
 
-		log(.info, "Result after debugging: \(result?.result ?? .min)")
+		return result?.result ?? .min
 	}
 }

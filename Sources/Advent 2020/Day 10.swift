@@ -17,11 +17,12 @@ struct Day10: Day {
 // MARK: - Part 1
 
 extension Day10 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?")
 
 		let diffs = Dictionary(grouping: zip(sequence, sequence.dropFirst()).map(-)) { $0 }.mapValues(\.count)
-		log(.info, "Differences in jolts: \(diffs[1, default: 0] * diffs[3, default: 0])")
+
+		return diffs[1, default: 0] * diffs[3, default: 0]
 	}
 }
 
@@ -38,7 +39,7 @@ extension Day10 {
 		return options.map { countPaths(in: chunk.dropFirst($0.0)) }.reduce(0, +)
 	}
 
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the total number of distinct ways you can arrange the adapters to connect the charging outlet to your device?")
 
 		// find chunks in the sequence that are 3 apart --> where the combinations are
@@ -48,7 +49,6 @@ extension Day10 {
 			return rhs < last + 3
 		}
 
-		let pathCount = chunks.map(countPaths(in:)).reduce(1, *)
-		log(.info, "# of paths: \(pathCount)")
+		return chunks.map(countPaths(in:)).reduce(1, *)
 	}
 }

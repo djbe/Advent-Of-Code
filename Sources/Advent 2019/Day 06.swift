@@ -35,10 +35,10 @@ extension Map {
 }
 
 extension Day06 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the total number of direct and indirect orbits in your map data?")
 
-		log(.info, "Checksum: \(map.checksum())")
+		return map.checksum()
 	}
 }
 
@@ -67,9 +67,9 @@ extension Map {
 }
 
 extension Day06 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the minimum number of orbital transfers required to move from the object YOU are orbiting to the object SAN is orbiting?")
 
-		log(.info, "Transfers: \(map.transfers(from: "YOU", to: "SAN"))")
+		return map.transfers(from: "YOU", to: "SAN")
 	}
 }

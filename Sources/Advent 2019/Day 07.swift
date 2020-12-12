@@ -48,14 +48,13 @@ extension Circuit {
 }
 
 extension Day07 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
 		let circuits: [Circuit] = Array(0...4).permutations()
 			.map { Circuit.makeSequence(program: program, settings: $0) }
 
-		let result = circuits.map { $0.run() }.max() ?? 0
-		log(.info, "Max thruster signal: \(result)")
+		return circuits.map { $0.run() }.max() ?? 0
 	}
 }
 
@@ -72,13 +71,12 @@ extension Circuit {
 }
 
 extension Day07 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
 		let circuits: [Circuit] = Array(5...9).permutations()
 			.map { Circuit.makeLoop(program: program, settings: $0) }
 
-		let result = circuits.map { $0.run() }.max() ?? 0
-		log(.info, "Max thruster signal with feedback: \(result)")
+		return circuits.map { $0.run() }.max() ?? 0
 	}
 }

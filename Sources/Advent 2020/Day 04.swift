@@ -55,10 +55,10 @@ extension Passport {
 }
 
 extension Day04 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("In your batch file, how many passports are valid?")
 
-		log(.info, "Valid passports (simple): \(passports.filter(\.simpleIsValid).count)")
+		return passports.filter(\.simpleIsValid).count
 	}
 }
 
@@ -100,9 +100,9 @@ extension Passport {
 }
 
 extension Day04 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("In your batch file, how many passports are valid?")
 
-		log(.info, "Valid passports (complex): \(passports.filter(\.isValid).count)")
+		return passports.filter(\.isValid).count
 	}
 }

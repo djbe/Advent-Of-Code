@@ -35,7 +35,7 @@ private extension Grid where T == Bool {
 }
 
 extension Day10 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("Find the best location for a new monitoring station. How many other asteroids can be detected from that location?")
 
 		let station: (point: Grid.Point, count: Int) = asteroids
@@ -45,8 +45,9 @@ extension Day10 {
 			}
 			.max { $0.1 < $1.1 }!
 		self.station = station.point
-
 		log(.info, "Best station at \(station.point.x),\(station.point.y) sees \(station.count) asteroids")
+
+		return station.count
 	}
 }
 
@@ -63,7 +64,7 @@ private extension Grid where T == Bool {
 }
 
 extension Day10 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What do you get if you multiply its X coordinate by 100 and then add its Y coordinate?")
 
 		let asteroids = self.asteroids.filter { $0 != station }
@@ -80,6 +81,8 @@ extension Day10 {
 			}
 
 		let guess = orderedByDestruction[199].point
-		log(.info, "200th asteroid is \(guess.x),\(guess.y) --> \(guess.x * 100 + guess.y)")
+		log(.info, "200th asteroid is \(guess.x),\(guess.y)")
+
+		return guess.x * 100 + guess.y
 	}
 }

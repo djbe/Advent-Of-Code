@@ -22,11 +22,10 @@ extension Day04 {
 		return zip(string, string.dropFirst()).contains { $0 == $1 }
 	}
 
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("How many different passwords within the range given in your puzzle input meet these criteria?")
 
-		let result = Self.range.filter(isValid(password:)).count
-		log(.info, "Number of valid passwords: \(result)")
+		return Self.range.filter(isValid(password:)).count
 	}
 }
 
@@ -42,10 +41,9 @@ extension Day04 {
 		}
 	}
 
-	mutating func part2() {
-		logPart("What is 100 * noun + verb?")
+	mutating func part2() -> Any {
+		logPart("How many different passwords within the range given in your puzzle input meet all of the criteria?")
 
-		let result = Self.range.filter(betterIsValid(password:))
-		log(.info, "Number of valid passwords: \(result.count)")
+		return Self.range.filter(betterIsValid(password:)).count
 	}
 }

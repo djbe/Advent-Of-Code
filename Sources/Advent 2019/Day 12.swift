@@ -60,14 +60,15 @@ extension System {
 }
 
 extension Day12 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the total energy in the system after simulating the moons given in your scan for 1000 steps?")
 
 		let system = System(lines: input)
 		for _ in 1...1_000 {
 			system.step()
 		}
-		log(.info, "Total energy: \(system.energy)")
+
+		return system.energy
 	}
 }
 
@@ -87,7 +88,7 @@ extension System {
 }
 
 extension Day12 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("How many steps does it take to reach the first state that exactly matches a previous state?")
 
 		let cycles: [Int] = [\Vector3<Int>.x, \.y, \.z].map {
@@ -96,6 +97,7 @@ extension Day12 {
 		}
 
 		log(.info, "Found cycles for each axis: \(cycles)")
-		log(.info, "Result: \(lcm(cycles))")
+
+		return lcm(cycles)
 	}
 }

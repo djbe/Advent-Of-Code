@@ -87,30 +87,27 @@ struct Day11: Day {
 // MARK: - Part 1
 
 extension Day11 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("How many panels does it paint at least once?")
 
 		let start = Panel.Point(x: 99, y: 99)
 		let panel = Panel(centeredAround: start)
-
 		let robot = Robot()
 		robot.draw(program: program, on: panel, start: start)
 
-		let result = panel.modifiedPositions.count
-		log(.info, "Number of panels painted: \(result)")
+		return panel.modifiedPositions.count
 	}
 }
 
 // MARK: - Part 2
 
 extension Day11 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("After starting the robot on a single white panel instead, what registration identifier does it paint on your hull?")
 
 		let start = Panel.Point(x: 44, y: 6)
 		let panel = Panel(centeredAround: start)
 		panel[start] = true
-
 		let robot = Robot()
 		robot.draw(program: program, on: panel, start: start)
 
@@ -118,5 +115,7 @@ extension Day11 {
 		for line in panel.data.data {
 			log(.info, line.map { $0 ? "X" : " " }.joined())
 		}
+
+		return "TODO"
 	}
 }

@@ -34,24 +34,23 @@ struct Day05: Day {
 // MARK: - Part 1
 
 extension Day05 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the highest seat ID on a boarding pass?")
 
-		log(.info, "Highest ID: \(passes.map(\.boardingPassID).max() ?? 0)")
+		return passes.map(\.boardingPassID).max() ?? 0
 	}
 }
 
 // MARK: - Part 2
 
 extension Day05 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the ID of your seat?")
 
 		let existing = Set(passes.map(\.boardingPassID))
 		let range = (existing.min() ?? 0)...(existing.max() ?? 0)
 		let available = Set(range)
 
-		let openSeat = available.subtracting(existing).first ?? 0
-		log(.info, "Open seat: \(openSeat)")
+		return available.subtracting(existing).first ?? 0
 	}
 }

@@ -80,19 +80,20 @@ struct Day13: Day {
 // MARK: - Part 1
 
 extension Day13 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("Start the game. How many block tiles are on the screen when the game exits?")
 
 		let arcade = Arcade(program: program)
 		arcade.run()
-		log(.info, "# of blocks: \(arcade.nubmerOfBlocks)")
+
+		return arcade.nubmerOfBlocks
 	}
 }
 
 // MARK: - Part 2
 
 extension Day13 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("Beat the game by breaking all the blocks. What is your score after the last block is broken?")
 
 		// insert coin
@@ -101,6 +102,7 @@ extension Day13 {
 		// play
 		let arcade = Arcade(program: program)
 		arcade.run()
-		log(.info, "Score: \(arcade.score)")
+
+		return arcade.score
 	}
 }

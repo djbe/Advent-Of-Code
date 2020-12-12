@@ -45,10 +45,10 @@ extension RuleSet {
 }
 
 extension Day07 {
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
-		log(.info, "Bags that can contain: \(rules.bagsThatCanContain(color: "shiny gold").count)")
+		return rules.bagsThatCanContain(color: "shiny gold").count
 	}
 }
 
@@ -63,9 +63,9 @@ extension RuleSet {
 }
 
 extension Day07 {
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("What is the highest signal that can be sent to the thrusters?")
 
-		log(.info, "Bags contained in: \(rules.bagsContained(in: "shiny gold"))")
+		return rules.bagsContained(in: "shiny gold")
 	}
 }

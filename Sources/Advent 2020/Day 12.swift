@@ -48,12 +48,13 @@ extension Day12 {
 		}
 	}
 
-	mutating func part1() {
+	mutating func part1() -> Any {
 		logPart("Figure out where the navigation instructions lead. What is the Manhattan distance between that location and the ship's starting position?")
 
 		let path = Path(instructions: input, tracer: Self.shipTracer())
 		let end = path.points.last ?? .zero
-		log(.info, "\(end) -> Distance: \(abs(end.x) + abs(end.y))")
+
+		return end.manhattanLength
 	}
 }
 
@@ -79,11 +80,12 @@ extension Day12 {
 		}
 	}
 
-	mutating func part2() {
+	mutating func part2() -> Any {
 		logPart("Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?")
 
 		let path = Path(instructions: input, tracer: Self.waypointTracer(waypoint: [10, 1]))
 		let end = path.points.last ?? .zero
-		log(.info, "\(end) -> Distance: \(abs(end.x) + abs(end.y))")
+
+		return end.manhattanLength
 	}
 }
