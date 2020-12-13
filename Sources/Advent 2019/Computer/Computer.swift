@@ -26,6 +26,19 @@ struct Computer {
 			}
 		}
 	}
+
+	mutating func runUntilOutput() -> Int {
+		while true {
+			let instruction = memory.current
+			instruction.execute(memory: &memory, input: input, output: output)
+
+			if instruction.opcode == .stop {
+				return 0
+			} else if instruction.opcode == .read {
+				return output.receive()
+			}
+		}
+	}
 }
 
 extension Computer {
