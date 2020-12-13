@@ -75,15 +75,25 @@ extension Day12 {
 // MARK: - Part 2
 
 extension System {
-	func findStepsForCycle(axis: KeyPath<Vector3<Int>, Int>) -> Int {
-		var steps = 0
+	func reachedCycle(_ axis: KeyPath<Vector3<Int>, Int>) -> Bool {
+		objects.map { $0.velocity[keyPath: axis] }.allSatisfy { $0 == 0 }
+	}
 
-		repeat {
+	func findStepsForCycle() -> [Int] {
+		let axes = [\Vector3<Int>.x, \.y, \.z]
+		var result: [KeyPath<Vector3<Int>, Int>: Int] = [:]
+
+		var steps = 0
+		while result.count != axes.count {
 			step()
 			steps += 1
-		} while !objects.map { $0.velocity[keyPath: axis] }.allSatisfy { $0 == 0 }
 
-		return steps * 2
+			for axis in axes where result[axis] == nil && reachedCycle(axis) {
+				result[axis] = steps
+			}
+		}
+
+		return result.values.map { $0 * 2 }
 	}
 }
 
@@ -91,11 +101,8 @@ extension Day12 {
 	mutating func part2() -> Any {
 		logPart("How many steps does it take to reach the first state that exactly matches a previous state?")
 
-		let cycles: [Int] = [\Vector3<Int>.x, \.y, \.z].map {
-			let system = System(lines: input)
-			return system.findStepsForCycle(axis: $0)
-		}
-
+		let system = System(lines: input)
+		let cycles = system.findStepsForCycle()
 		log(.info, "Found cycles for each axis: \(cycles)")
 
 		return lcm(cycles)
