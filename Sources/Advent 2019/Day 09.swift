@@ -19,7 +19,7 @@ extension Day09 {
 		logPart("What BOOST keycode does it produce?")
 
 		let output = BlockingChannel()
-		let computer = Computer(program, input: BlockingChannel(1), output: output)
+		var computer = Computer(program, input: BlockingChannel(1), output: output)
 		computer.run()
 
 		return output.receiveLast()
@@ -33,7 +33,7 @@ extension Day09 {
 		logPart("What are the coordinates of the distress signal?")
 
 		let output = BlockingChannel()
-		let computer = Computer(program, input: BlockingChannel(2), output: output)
+		var computer = Computer(program, input: BlockingChannel(2), output: output)
 		computer.run()
 
 		return output.receiveLast()

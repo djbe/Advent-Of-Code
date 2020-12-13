@@ -53,7 +53,7 @@ private final class Robot {
 	func draw(program: Program, on panel: Panel, start: Panel.Point) {
 		position = start
 		let output = BlockingChannel()
-		let computer = Computer(program, input: camera.channel, output: output)
+		var computer = Computer(program, input: camera.channel, output: output)
 
 		// run IO
 		DispatchQueue.global().async {

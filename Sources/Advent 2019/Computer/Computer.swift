@@ -5,10 +5,10 @@
 
 import Foundation
 
-final class Computer {
+struct Computer {
 	private var memory: Memory
-	private let input: Channel
-	private var output: Channel
+	var input: Channel
+	var output: Channel
 
 	init(_ program: Program, input: Channel = BlockingChannel(), output: Channel = BlockingChannel()) {
 		memory = Memory(program: program)
@@ -16,10 +16,10 @@ final class Computer {
 		self.output = output
 	}
 
-	func run() {
+	mutating func run() {
 		while true {
 			let instruction = memory.current
-			instruction.execute(memory: memory, input: input, output: output)
+			instruction.execute(memory: &memory, input: input, output: output)
 
 			if instruction.opcode == .stop {
 				return
@@ -33,7 +33,7 @@ extension Computer {
 		memory.data.first ?? 0
 	}
 
-	func runAndWaitForOutput() -> Int {
+	mutating func runAndWaitForOutput() -> Int {
 		run()
 		return output.receiveLast()
 	}

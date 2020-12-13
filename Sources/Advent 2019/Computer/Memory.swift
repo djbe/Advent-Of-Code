@@ -6,7 +6,7 @@
 import Common
 import Foundation
 
-final class Memory {
+struct Memory {
 	var data: [Int]
 	var extraMemory: [Int: Int]
 	var pointer: Int

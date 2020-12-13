@@ -39,7 +39,7 @@ private final class Arcade {
 	}
 
 	func run() {
-		let computer = Computer(
+		var computer = Computer(
 			program,
 			input: CallbackChannel(generator: joystickGenerator),
 			output: CallbackChannel(receiver: outputReceiver, chunkedBy: 3)

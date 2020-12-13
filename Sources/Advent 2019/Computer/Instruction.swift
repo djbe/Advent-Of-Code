@@ -43,7 +43,7 @@ struct Instruction {
 
 extension Instruction {
 	// swiftlint:disable:next cyclomatic_complexity
-	func execute(memory: Memory, input: Channel, output: Channel) {
+	func execute(memory: inout Memory, input: Channel, output: Channel) {
 		var pointer = memory.pointer
 
 		log(.debug, "\(pointer) \(description(with: memory))")

@@ -18,7 +18,7 @@ extension Day05 {
 	mutating func part1() -> Any {
 		logPart("After providing 1 to the only input instruction and passing all the tests, what diagnostic code does the program produce?")
 
-		let computer = Computer(program, input: BlockingChannel(1))
+		var computer = Computer(program, input: BlockingChannel(1))
 		let result = computer.runAndWaitForOutput()
 
 		return result
@@ -31,7 +31,7 @@ extension Day05 {
 	mutating func part2() -> Any {
 		logPart("What is the diagnostic code for system ID 5?")
 
-		let computer = Computer(program, input: BlockingChannel(5))
+		var computer = Computer(program, input: BlockingChannel(5))
 		let result = computer.runAndWaitForOutput()
 
 		return result

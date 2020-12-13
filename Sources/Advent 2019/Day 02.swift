@@ -26,7 +26,7 @@ extension Day02 {
 		logPart("What value is left at position 0 after the program halts?")
 
 		program.set(noun: 12, verb: 2)
-		let computer = Computer(program)
+		var computer = Computer(program)
 		computer.run()
 
 		return computer.firstMemoryByte
@@ -38,7 +38,7 @@ extension Day02 {
 extension Day02 {
 	mutating func testModification(noun: Int, verb: Int) -> Int {
 		program.set(noun: noun, verb: verb)
-		let computer = Computer(program)
+		var computer = Computer(program)
 		computer.run()
 		return computer.firstMemoryByte
 	}

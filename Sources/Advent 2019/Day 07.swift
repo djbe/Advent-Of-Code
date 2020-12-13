@@ -7,18 +7,24 @@ import Algorithms
 import Common
 import Foundation
 
-private struct Circuit {
-	private let computers: [Computer]
+private final class Circuit {
+	private var computers: [Computer]
 	private let channels: [BlockingChannel]
 	private let outputChannel: BlockingChannel
+
+	init(computers: [Computer], channels: [BlockingChannel], outputChannel: BlockingChannel) {
+		self.computers = computers
+		self.channels = channels
+		self.outputChannel = outputChannel
+	}
 
 	func run(start: Int = 0) -> Int {
 		let group = DispatchGroup()
 
-		computers.forEach { computer in
+		(0..<computers.count).forEach { index in
 			group.enter()
 			DispatchQueue.global().async {
-				computer.run()
+				self.computers[index].run()
 				group.leave()
 			}
 		}
