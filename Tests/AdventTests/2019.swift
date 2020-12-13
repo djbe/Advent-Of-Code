@@ -102,4 +102,11 @@ final class Test2019: XCTestCase {
 		XCTAssertEqual(String(describing: day.part1()), "284")
 		XCTAssertEqual(String(describing: day.part2()), "13581")
 	}
+
+	func testDay14() {
+		var day = Day14()
+
+		XCTAssertEqual(String(describing: day.part1()), "362713")
+		XCTAssertEqual(String(describing: day.part2()), "3281821")
+	}
 }
