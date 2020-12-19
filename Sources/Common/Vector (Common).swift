@@ -14,6 +14,7 @@ public protocol VectorType: Hashable, ExpressibleByArrayLiteral, CustomStringCon
 	init(_ coordinates: Real...)
 
 	var coordinates: [Real] { get }
+	static var zero: Self { get }
 }
 
 // MARK: - Default implementation

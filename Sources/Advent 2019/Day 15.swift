@@ -44,7 +44,7 @@ private final class RepairDroid {
 extension RepairDroid {
 	func description(for position: Point) -> String {
 		let points = (world.keys + [position])
-		return points.description {
+		return points.descriptionMapping {
 			if position == $0 {
 				return "D"
 			} else {
