@@ -10,6 +10,7 @@ let package = Package(
 	dependencies: [
 		.package(url: "https://github.com/apple/swift-algorithms", .branch("main")),
 		.package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),
+		.package(url: "https://github.com/sharplet/Regex.git", from: "2.1.0"),
 		// Tooling
 		.package(url: "https://github.com/shibapm/Komondor", from: "1.0.0"),
 		.package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.41.2"),
@@ -21,7 +22,8 @@ let package = Package(
 		.target(name: "Advent 2020", dependencies: ["Common"], resources: [.process("Input")]),
 		.target(name: "Common", dependencies: [
 			.product(name: "Algorithms", package: "swift-algorithms"),
-			.product(name: "ArgumentParser", package: "swift-argument-parser")
+			.product(name: "ArgumentParser", package: "swift-argument-parser"),
+			.product(name: "Regex", package: "Regex")
 		]),
 		.testTarget(name: "AdventTests", dependencies: ["Advent 2019", "Advent 2020"])
 	],
