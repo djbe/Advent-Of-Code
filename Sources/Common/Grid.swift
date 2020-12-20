@@ -14,6 +14,12 @@ public struct Grid<T> {
 	}
 }
 
+public extension Grid where T == Bool {
+	init<T: Collection>(lines: T) where T.Element: StringProtocol {
+		self.init(lines.map { $0.map { $0 != "." } })
+	}
+}
+
 public extension Grid {
 	func contains(_ point: Point) -> Bool {
 		data.indices.contains(point.y) && data[point.y].indices.contains(point.x)
@@ -36,6 +42,16 @@ public extension Grid {
 	/// Iterate over all available positions
 	func iterate() -> [(point: Point, value: T)] {
 		zip(0..., data).flatMap { index, row in zip(0..., row).map { (Point(x: $0, y: index), $1) } }
+	}
+
+	mutating func rotate() {
+		data = data[0].indices.map { row in
+			data.reversed().map { $0[row] }
+		}
+	}
+
+	mutating func flip() {
+		data = data.map { $0.reversed() }
 	}
 }
 
@@ -67,6 +83,28 @@ public extension Grid {
 			handler($0)
 			return false
 		}
+	}
+}
+
+public extension Grid {
+	func tryToFit(check: (Grid<T>) -> Bool) -> Bool {
+		var result = self
+		if check(result) { return true }
+
+		for _ in 1...4 {
+			result.rotate()
+			if check(result) { return true }
+		}
+
+		result.flip()
+		if check(result) { return true }
+
+		for _ in 1...4 {
+			result.rotate()
+			if check(result) { return true }
+		}
+
+		return false
 	}
 }
 

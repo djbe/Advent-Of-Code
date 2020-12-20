@@ -6,12 +6,6 @@
 import Algorithms
 import Common
 
-private extension Grid where T == Bool {
-	init<T: StringProtocol>(lines: [T]) {
-		self.init(lines.map { $0.map { $0 == "#" } })
-	}
-}
-
 struct Day10: Day {
 	var name: String { "Monitoring Station" }
 
