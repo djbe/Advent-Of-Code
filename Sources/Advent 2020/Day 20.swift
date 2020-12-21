@@ -167,21 +167,15 @@ extension Puzzle {
 }
 
 private extension Grid where T == Bool {
-	func count(grid: Grid<T>) -> Int {
-		let width = grid.data[0].count
-		let height = grid.data.count
-		var result = 0
-
-		for row in 0...(data.count - height) {
-			for column in 0...(data[row].count - width) {
-				let matches = zip(0..., grid.data).allSatisfy { index, line in
-					zip(line, data[row + index][column..<(column + width)]).allSatisfy { ($0 && $1) || !$0 }
+	func count(monster: Grid<T>) -> Int {
+		slidingWindow(size: monster.size)
+			.map { _, mapSlice in
+				let matches = zip(monster.data, mapSlice).allSatisfy { monster, map in
+					zip(monster, map).allSatisfy { ($0 && $1) || !$0 }
 				}
-				result += matches ? 1 : 0
+				return matches ? 1 : 0
 			}
-		}
-
-		return result
+			.reduce(0, +)
 	}
 }
 
@@ -200,7 +194,7 @@ extension Day20 {
 		// search for # monsters in grid
 		var monsters = 0
 		_ = result.tryToFit { grid in
-			monsters = grid.count(grid: Self.monster)
+			monsters = grid.count(monster: Self.monster)
 			return monsters > 0
 		}
 

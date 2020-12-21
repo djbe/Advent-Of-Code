@@ -21,6 +21,10 @@ public extension Grid where T == Bool {
 }
 
 public extension Grid {
+	var size: Point {
+		[data.first?.count ?? 0, data.count]
+	}
+
 	func contains(_ point: Point) -> Bool {
 		data.indices.contains(point.y) && data[point.y].indices.contains(point.x)
 	}
@@ -87,6 +91,7 @@ public extension Grid {
 }
 
 public extension Grid {
+	/// Try  to rotate and/or flip the grid until it satisfies the given condition
 	func tryToFit(check: (Grid<T>) -> Bool) -> Bool {
 		var result = self
 		if check(result) { return true }
