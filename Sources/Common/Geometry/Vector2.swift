@@ -66,7 +66,7 @@ public extension Vector2 where T: SignedNumeric & BinaryInteger {
 		let diffX = x - vector.x
 		let diffY = y - vector.y
 		let angle = atan2(Float(diffY), Float(diffX)) - .pi / 2
-		return (angle + 2 * .pi).truncatingRemainder(dividingBy: 2 * .pi)
+		return (angle + .tau).truncatingRemainder(dividingBy: .tau)
 	}
 
 	func rotated(by angle: Float) -> Vector2 {

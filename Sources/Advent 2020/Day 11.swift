@@ -10,13 +10,13 @@ import Foundation
 private final class World: CustomStringConvertible {
 	typealias Point = Vector2<Int>
 
-	let seats: Grid<Bool>
+	let seats: Matrix<Bool>
 	let seatMap: [Point: [Point]]
-	var people: Grid<Int>
+	var people: Matrix<Int>
 
-	init<T: StringProtocol>(lines: [T], seatFinder: (Point, Grid<Bool>) -> [Point]) {
-		let seats = Grid<Bool>(lines.map { $0.map { $0 != "." } })
-		let allSeats = seats.iterate().filter { $0.value }.map(\.point)
+	init<T: StringProtocol>(lines: [T], seatFinder: (Point, Matrix<Bool>) -> [Point]) {
+		let seats = Matrix<Bool>(lines.map { $0.map { $0 != "." } })
+		let allSeats = seats.iterate().filter { seats[$0] }
 
 		self.seats = seats
 		seatMap = Dictionary(uniqueKeysWithValues: allSeats.map { ($0, seatFinder($0, seats)) })
@@ -24,7 +24,7 @@ private final class World: CustomStringConvertible {
 	}
 
 	var description: String {
-		seats.iterate().map { $0.value ? (people[$0.point] == 1 ? "#" : "L") : "." }.chunks(of: seats.data[0].count).map { $0.joined() }.joined(separator: "\n")
+		seats.descriptionMapping { point, value in value ? (people[point] == 1 ? "#" : "L") : "." }
 	}
 
 	func step(maxAdjacent: Int) -> Bool {
@@ -32,7 +32,7 @@ private final class World: CustomStringConvertible {
 		defer { people = result }
 
 		for (seat, adjacent) in seatMap {
-			let sum = adjacent.map { people[$0] }.reduce(0, +)
+			let sum = adjacent.map { people[$0] }.sum
 			if people[seat] == 0, sum == 0 {
 				result[seat] = 1
 			} else if people[seat] == 1, sum >= maxAdjacent {
@@ -53,7 +53,7 @@ private final class World: CustomStringConvertible {
 	}
 
 	var occupiedSeats: Int {
-		people.iterate().map(\.value).reduce(0, +)
+		people.iterate().map { people[$0] }.sum
 	}
 }
 
@@ -68,8 +68,8 @@ struct Day11: Day {
 extension World {
 	static let directions: [Point] = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, -1], [-1, 1], [1, 1]].map(Point.init)
 
-	static func seatsAdjacent(to center: Point, seats: Grid<Bool>) -> [Point] {
-		Self.directions.map { center + $0 }.filter { seats.getValue(at: $0, default: false) }
+	static func seatsAdjacent(to center: Point, seats: Matrix<Bool>) -> [Point] {
+		Self.directions.map { center + $0 }.filter { seats.get($0) ?? false }
 	}
 }
 
@@ -86,21 +86,15 @@ extension Day11 {
 
 // MARK: - Part 2
 
-extension Grid where T == Bool {
+extension Matrix where T == Bool {
 	func find(from start: Point, direction: Point) -> Point? {
-		var result: Point?
-		step(from: start, direction: direction, wrap: false) { point in
-			if getValue(at: point, default: false) {
-				result = point
-			}
-			return result != nil || !contains(point)
-		}
-		return result
+		step(from: start, direction: direction).dropFirst()
+			.first { self[$0] }
 	}
 }
 
 extension World {
-	static func seatsWithLineOfSight(to center: Point, seats: Grid<Bool>) -> [Point] {
+	static func seatsWithLineOfSight(to center: Point, seats: Matrix<Bool>) -> [Point] {
 		Self.directions.compactMap { seats.find(from: center, direction: $0) }
 	}
 }

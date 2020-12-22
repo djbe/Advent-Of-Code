@@ -20,7 +20,7 @@ extension Day09 {
 		sequence.slidingWindows(ofCount: history + 1).first { numbers in
 			let newNumber = numbers.last ?? 0
 			return !Array(numbers.prefix(history)).permutations(ofCount: 2)
-				.contains { $0.reduce(0, +) == newNumber }
+				.contains { $0.sum == newNumber }
 		}?.last
 	}
 
@@ -37,7 +37,7 @@ extension Day09 {
 extension Day09 {
 	func findWeakness(sequence: [Int], invalid: Int) -> [Int] {
 		for size in 3... {
-			if let result = sequence.slidingWindows(ofCount: size).first(where: { $0.reduce(0, +) == invalid }) {
+			if let result = sequence.slidingWindows(ofCount: size).first(where: { $0.sum == invalid }) {
 				return Array(result)
 			}
 		}

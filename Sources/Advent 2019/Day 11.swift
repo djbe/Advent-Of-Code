@@ -10,13 +10,13 @@ import Foundation
 private final class Panel {
 	typealias Point = Vector2<Int>
 
-	var data: Grid<Bool>
+	var data: Matrix<Bool>
 	var modifiedPositions: Set<Point> = []
 
 	init(centeredAround point: Point) {
 		let width = point.x * 2 + 2
 		let height = point.y * 2 + 2
-		data = Grid(Array(repeating: false, count: width * height).chunks(of: width).map(Array.init))
+		data = Matrix(Array(repeating: false, count: width * height).chunks(of: width).map(Array.init))
 	}
 
 	subscript(position: Point) -> Bool {

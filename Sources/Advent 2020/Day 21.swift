@@ -66,7 +66,7 @@ extension Day21 {
 		let ingredients = menu.safeIngredients
 		return menu.food
 			.map { $0.intersection(ingredients).count }
-			.reduce(0, +)
+			.sum
 	}
 }
 

@@ -54,8 +54,8 @@ struct Day12: Day {
 
 extension System {
 	var energy: Int {
-		objects.map { $0.position.coordinates.map(abs).reduce(0, +) * $0.velocity.coordinates.map(abs).reduce(0, +) }
-			.reduce(0, +)
+		objects.map { $0.position.coordinates.map(abs).sum * $0.velocity.coordinates.map(abs).sum }
+			.sum
 	}
 }
 

@@ -14,21 +14,21 @@ private enum Direction: Int {
 private struct Tile {
 	let identifier: Int
 	var edges: [[Bool]] = []
-	var grid: Grid<Bool> {
+	var matrix: Matrix<Bool> {
 		didSet { calculateEdges() }
 	}
 
 	init<T: StringProtocol>(_ lines: ArraySlice<T>) {
 		let cleaned = lines.filter { !$0.isEmpty }
 		identifier = Int(String(cleaned[0].dropFirst(5).dropLast())) ?? 0
-		grid = Grid(lines: cleaned.dropFirst())
+		matrix = Matrix(lines: cleaned.dropFirst())
 		calculateEdges()
 	}
 
 	private mutating func calculateEdges() {
 		edges = [
-			grid.data.first ?? [], grid.data.last ?? [],
-			grid.data.compactMap(\.first), grid.data.compactMap(\.last)
+			matrix.data.first ?? [], matrix.data.last ?? [],
+			matrix.data.compactMap(\.first), matrix.data.compactMap(\.last)
 		]
 	}
 
@@ -82,7 +82,7 @@ extension Day20 {
 	mutating func part1() -> Any {
 		logPart("Assemble the tiles into an image. What do you get if you multiply together the IDs of the four corner tiles?")
 
-		return puzzle.corners.map(\.identifier).reduce(1, *)
+		return puzzle.corners.map(\.identifier).product
 	}
 }
 
@@ -98,8 +98,8 @@ extension Tile {
 
 		// try to match first edge
 		var result = self
-		let matched = grid.tryToFit { grid in
-			result.grid = grid
+		let matched = matrix.tryToFit { grid in
+			result.matrix = grid
 			return result.edge(at: direction) == edge
 		}
 
@@ -126,19 +126,19 @@ extension Puzzle {
 
 		// rotate topleft piece until its connecting edges face right/down
 		while !cornerEdges.isSuperset(of: [topLeft.edge(at: .right), topLeft.edge(at: .bottom)]) {
-			topLeft.grid.rotate()
+			topLeft.matrix.rotate()
 		}
 
 		return topLeft
 	}
 
-	func solve() -> Grid<Bool> {
+	func solve() -> Matrix<Bool> {
 		let topLeft = positionTopLeftCorner()
 		var remaining = tiles.subtracting([topLeft])
 
 		// position each tile (next to existing ones)
-		var solution: [Grid.Point: Tile] = [Grid.Point(0, 0): topLeft]
-		var position: Grid.Point = [1, 0]
+		var solution: [Matrix.Point: Tile] = [Matrix.Point(0, 0): topLeft]
+		var position: Matrix.Point = [1, 0]
 		while !remaining.isEmpty {
 			let topEdge = solution[position + [0, -1]]?.edge(at: .bottom)
 			let leftEdge = solution[position + [-1, 0]]?.edge(at: .right)
@@ -157,17 +157,17 @@ extension Puzzle {
 		var result: [[Bool]] = []
 		for row in 0...position.y {
 			let rowTiles = (0...position.x).compactMap { solution[[$0, row]] }
-			for tileRow in 1..<(rowTiles[0].grid.data.count - 1) {
-				result.append(rowTiles.flatMap { $0.grid.data[tileRow].dropFirst().dropLast() })
+			for tileRow in 1..<(rowTiles[0].matrix.data.count - 1) {
+				result.append(rowTiles.flatMap { $0.matrix.data[tileRow].dropFirst().dropLast() })
 			}
 		}
 
-		return Grid(result)
+		return Matrix(result)
 	}
 }
 
-private extension Grid where T == Bool {
-	func count(monster: Grid<T>) -> Int {
+private extension Matrix where T == Bool {
+	func count(monster: Matrix<T>) -> Int {
 		slidingWindow(size: monster.size)
 			.map { _, mapSlice in
 				let matches = zip(monster.data, mapSlice).allSatisfy { monster, map in
@@ -175,12 +175,12 @@ private extension Grid where T == Bool {
 				}
 				return matches ? 1 : 0
 			}
-			.reduce(0, +)
+			.sum
 	}
 }
 
 extension Day20 {
-	static let monster = Grid(lines: """
+	static let monster = Matrix(lines: """
 	..................#.
 	#....##....##....###
 	.#..#..#..#..#..#...

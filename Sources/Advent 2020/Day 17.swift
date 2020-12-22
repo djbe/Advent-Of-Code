@@ -22,7 +22,7 @@ private final class World<T: VectorType> where T.Real == Int {
 	func step() {
 		var result: Set<T> = []
 
-		for point in VectorCollectionIterator(points, margin: 1) {
+		for point in points.surroundingGrid(margin: 1) {
 			let adjacent = pointsAdjacent(to: point)
 			let active = points.intersection(adjacent).count
 

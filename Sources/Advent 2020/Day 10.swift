@@ -36,7 +36,7 @@ extension Day10 {
 		let start = chunk.first ?? 0
 		let options = zip(1..., chunk.dropFirst().prefix(3)).filter { $1 <= start + 3 }
 
-		return options.map { countPaths(in: chunk.dropFirst($0.0)) }.reduce(0, +)
+		return options.map { countPaths(in: chunk.dropFirst($0.0)) }.sum
 	}
 
 	mutating func part2() -> Any {
@@ -49,6 +49,6 @@ extension Day10 {
 			return rhs < last + 3
 		}
 
-		return chunks.map(countPaths(in:)).reduce(1, *)
+		return chunks.map(countPaths(in:)).product
 	}
 }

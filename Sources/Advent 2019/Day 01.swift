@@ -22,7 +22,7 @@ extension Day01 {
 	mutating func part1() -> Any {
 		logPart("What is the sum of the fuel requirements for all of the modules on your spacecraft?")
 
-		return input.map(fuelNeeded(for:)).reduce(0, +)
+		return input.map(fuelNeeded(for:)).sum
 	}
 }
 
@@ -38,6 +38,6 @@ extension Day01 {
 	mutating func part2() -> Any {
 		logPart("What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking into account the mass of the added fuel?")
 
-		return input.map(accurateFuelNeeded(for:)).reduce(0, +)
+		return input.map(accurateFuelNeeded(for:)).sum
 	}
 }

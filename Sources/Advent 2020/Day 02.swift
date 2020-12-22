@@ -51,7 +51,7 @@ extension Day02 {
 
 		return parsed
 			.map { $0.policy.validateOld($0.remainder) ? 1 : 0 }
-			.reduce(0, +)
+			.sum
 	}
 }
 
@@ -73,6 +73,6 @@ extension Day02 {
 
 		return parsed
 			.map { $0.policy.validateNew($0.remainder) ? 1 : 0 }
-			.reduce(0, +)
+			.sum
 	}
 }

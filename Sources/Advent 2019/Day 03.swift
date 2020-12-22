@@ -64,7 +64,7 @@ extension Day03 {
 		logPart("What is the fewest combined steps the wires must take to reach an intersection?")
 
 		return intersections
-			.map { point in paths.map { $0.stepsTaken(for: point) }.reduce(0, +) }
+			.map { point in paths.map { $0.stepsTaken(for: point) }.sum }
 			.min() ?? .max
 	}
 }

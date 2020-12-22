@@ -60,7 +60,7 @@ extension Day18 {
 		let solver = Solver(order: #"(\d+)(?: (\+|\*) (\d+))+"#)
 		let results = input.map(String.init).map(solver.resolve(line:))
 
-		return results.reduce(0, +)
+		return results.sum
 	}
 }
 
@@ -73,6 +73,6 @@ extension Day18 {
 		let solver = Solver(order: #"(\d+)(?: (\+) (\d+))+"#, #"(\d+)(?: (\*) (\d+))+"#)
 		let results = input.map(String.init).map(solver.resolve(line:))
 
-		return results.reduce(0, +)
+		return results.sum
 	}
 }

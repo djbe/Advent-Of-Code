@@ -13,7 +13,7 @@ public struct VectorCollectionIterator<Vector: VectorType>: Sequence, IteratorPr
 	// swiftlint:disable:next discouraged_optional_collection
 	var current: [Vector.Real]?
 
-	public init<T: Collection>(_ collection: T, margin: Vector.Real = 0) where T.Element == Vector {
+	init<T: Collection>(_ collection: T, margin: Vector.Real = 0) where T.Element == Vector {
 		var min = Vector.zero.coordinates
 		var max = Vector.zero.coordinates
 		for vector in collection {
@@ -62,5 +62,11 @@ public struct VectorCollectionIterator<Vector: VectorType>: Sequence, IteratorPr
 		}
 
 		return Vector(current)
+	}
+}
+
+public extension Collection where Element: VectorType, Element.Real: Comparable {
+	func surroundingGrid(margin: Element.Real = 0) -> VectorCollectionIterator<Element> {
+		VectorCollectionIterator(self, margin: margin)
 	}
 }

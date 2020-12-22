@@ -7,8 +7,6 @@ import Foundation
 
 // swiftlint:disable identifier_name yoda_condition
 
-// MARK: - GCD / LCM
-
 public func gcd<T: BinaryInteger>(_ a: T, _ b: T) -> T {
 	assert(a >= 0 && b >= 0)
 
@@ -54,18 +52,4 @@ public func lcm<T: BinaryInteger>(_ a: T, _ b: T) -> T {
 
 public func lcm<T: BinaryInteger>(_ numbers: [T]) -> T {
 	numbers.dropFirst().reduce(numbers.first ?? 0) { lcm($0, $1) }
-}
-
-// MARK: - Trigonometry
-
-public func deg2rad<T: BinaryInteger>(_ degrees: T) -> Float {
-	deg2rad(Float(degrees))
-}
-
-public func deg2rad<T: FloatingPoint>(_ degrees: T) -> T {
-	degrees * .pi / 180
-}
-
-public func rad2deg<T: FloatingPoint>(_ radians: T) -> T {
-	radians * 180 / .pi
 }

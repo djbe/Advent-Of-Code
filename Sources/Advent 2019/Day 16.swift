@@ -16,7 +16,7 @@ struct FFT {
 
 	func apply(input: [Int], output: inout [Int], offset: Int = 0) {
 		for index in 0..<input.count {
-			output[index] = abs(zip(0..., input).map { coefficient(at: $0, row: index) * $1 }.reduce(0, +)) % 10
+			output[index] = abs(zip(0..., input).map { coefficient(at: $0, row: index) * $1 }.sum) % 10
 		}
 	}
 }

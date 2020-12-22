@@ -30,7 +30,7 @@ struct Day06: Day {
 extension Map {
 	func checksum(from start: String = "COM", depth: Int = 1) -> Int {
 		self[start].count * depth +
-			self[start].map { checksum(from: $0, depth: depth + 1) }.reduce(0, +)
+			self[start].map { checksum(from: $0, depth: depth + 1) }.sum
 	}
 }
 

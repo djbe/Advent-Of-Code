@@ -66,7 +66,7 @@ extension Day16 {
 
 		let invalidValues = file.tickets.map { $0.invalidValues(for: file.rules) }.flatMap { $0 }
 
-		return invalidValues.reduce(0, +)
+		return invalidValues.sum
 	}
 }
 
@@ -98,6 +98,6 @@ extension Day16 {
 		let departureFields = mappedFields.filter { $0.value.name.hasPrefix("departure") }.keys
 		let departureValues = departureFields.map { file.myTicket.numbers[$0] }
 
-		return departureValues.reduce(1, *)
+		return departureValues.product
 	}
 }

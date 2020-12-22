@@ -14,7 +14,7 @@ private protocol Computer {
 
 extension Computer {
 	var memorySum: Int {
-		memory.values.reduce(0, +)
+		memory.values.sum
 	}
 }
 

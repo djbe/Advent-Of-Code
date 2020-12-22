@@ -5,11 +5,17 @@
 
 import Foundation
 
+public extension Matrix {
+	func descriptionMapping(mapper: (_ point: Point, _ value: T) -> Character) -> String {
+		map(mapper).data.map { String($0) }.joined(separator: "\n")
+	}
+}
+
 public extension Collection where Element == Vector2<Int> {
 	func descriptionMapping(mapper: (Element) -> Character) -> String {
 		var previous: Element?
 
-		return String(VectorCollectionIterator(self)
+		return String(surroundingGrid()
 			.flatMap { (point: Element) -> [Character] in
 				defer { previous = point }
 				let character = mapper(point)
@@ -28,7 +34,7 @@ public extension Collection where Element == Vector3<Int> {
 	func descriptionMapping(mapper: (Element) -> Character) -> String {
 		var previous: Element?
 
-		return String(VectorCollectionIterator(self)
+		return String(surroundingGrid()
 			.flatMap { (point: Element) -> [Character] in
 				defer { previous = point }
 				let character = mapper(point)
@@ -49,7 +55,7 @@ public extension Collection where Element == Vector4<Int> {
 	func descriptionMapping(mapper: (Element) -> Character) -> String {
 		var previous: Element?
 
-		return String(VectorCollectionIterator(self)
+		return String(surroundingGrid()
 			.flatMap { (point: Element) -> [Character] in
 				defer { previous = point }
 				let character = mapper(point)
