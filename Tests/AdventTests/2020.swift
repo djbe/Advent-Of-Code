@@ -156,8 +156,8 @@ final class Test2020: XCTestCase {
 
 	func testDay24() {
 		var day = normal(day: Day24.self)
-		XCTAssertEqual(String(describing: day.part1()), "0")
-		XCTAssertEqual(String(describing: day.part2()), "0")
+		XCTAssertEqual(String(describing: day.part1()), "438")
+		XCTAssertEqual(String(describing: day.part2()), "4038")
 	}
 
 	func testDay25() {
