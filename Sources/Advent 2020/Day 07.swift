@@ -10,14 +10,14 @@ import Foundation
 private struct RuleSet {
 	let rules: [String: [String: Int]]
 
-	init<T: StringProtocol>(lines: [T]) {
+	init<T: StringProtocol>(lines: [Line<T>]) {
 		rules = Dictionary(uniqueKeysWithValues: lines.compactMap(Self.parse(line:)))
 	}
 
-	private static func parse<T: StringProtocol>(line: T) -> (String, [String: Int])? {
-		guard !line.contains("no other bags.") else { return nil }
+	private static func parse<T: StringProtocol>(line: Line<T>) -> (String, [String: Int])? {
+		guard !line.raw.contains("no other bags.") else { return nil }
 
-		let components = line.components(separatedBy: " contain ")
+		let components = line.raw.components(separatedBy: " contain ")
 		let color = String(components[0].dropLast(5))
 		let contained: [(String, Int)] = components[1].dropLast().components(separatedBy: ", ").map {
 			let amount = Int($0.split(separator: " ")[0]) ?? 0
@@ -30,9 +30,12 @@ private struct RuleSet {
 }
 
 struct Day07: Day {
-	var name: String { "Amplification Circuit" }
+	static let name = "Amplification Circuit"
+	private let rules: RuleSet
 
-	private lazy var rules = RuleSet(lines: loadInputFile())
+	init(input: Input) {
+		rules = RuleSet(lines: input.lines)
+	}
 }
 
 // MARK: - Part 1

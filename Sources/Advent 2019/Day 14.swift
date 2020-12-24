@@ -12,8 +12,8 @@ struct Reaction {
 	let produced: String
 	let ingredients: [String: Int]
 
-	init<T: StringProtocol>(_ line: T) {
-		let comps = line.components(separatedBy: " => ")
+	init<T: StringProtocol>(_ line: Line<T>) {
+		let comps = line.raw.components(separatedBy: " => ")
 		amount = Self.parseItem(comps[1]).amount
 		produced = Self.parseItem(comps[1]).name
 		ingredients = Dictionary(uniqueKeysWithValues: comps[0].components(separatedBy: ", ").map(Self.parseItem))
@@ -31,15 +31,18 @@ struct Reaction {
 struct ReactionList {
 	let reactions: [String: Reaction]
 
-	init<T: StringProtocol>(lines: [T]) {
+	init<T: StringProtocol>(lines: [Line<T>]) {
 		reactions = Dictionary(uniqueKeysWithValues: lines.map(Reaction.init).map { ($0.produced, $0) })
 	}
 }
 
 struct Day14: Day {
-	var name: String { "Space Stoichiometry" }
+	static let name = "Space Stoichiometry"
+	private let list: ReactionList
 
-	private lazy var list = ReactionList(lines: loadInputFile())
+	init(input: Input) {
+		list = ReactionList(lines: input.lines)
+	}
 }
 
 // MARK: - Part 1

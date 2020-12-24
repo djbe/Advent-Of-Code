@@ -12,19 +12,22 @@ struct Schedule {
 	let ids: [Int]
 	let indices: [Int]
 
-	init<T: StringProtocol>(lines: [T]) {
-		let numbers = zip(0..., lines[1].split(separator: ",").map { Int(String($0)) })
+	init<T: StringProtocol>(lines: [Line<T>]) {
+		let numbers = zip(0..., lines[1].csvWords.map(\.integer))
 
-		now = Int(lines[0]) ?? 0
+		now = lines[0].integer ?? 0
 		ids = numbers.compactMap(\.1)
 		indices = numbers.filter { $0.1 != nil }.map(\.0)
 	}
 }
 
 struct Day13: Day {
-	var name: String { "Shuttle Search" }
+	static let name = "Shuttle Search"
+	private let schedule: Schedule
 
-	private lazy var schedule = Schedule(lines: loadInputFile())
+	init(input: Input) {
+		schedule = Schedule(lines: input.lines)
+	}
 }
 
 // MARK: - Part 1

@@ -21,9 +21,12 @@ private struct Path {
 }
 
 struct Day12: Day {
-	var name: String { "Rain Risk" }
+	static let name = "Rain Risk"
+	private let instructions: [Substring]
 
-	private lazy var input = loadInputFile()
+	init(input: Input) {
+		instructions = input.rawLines
+	}
 }
 
 // MARK: - Part 1
@@ -51,7 +54,7 @@ extension Day12 {
 	mutating func part1() -> Any {
 		logPart("Figure out where the navigation instructions lead. What is the Manhattan distance between that location and the ship's starting position?")
 
-		let path = Path(instructions: input, tracer: Self.shipTracer())
+		let path = Path(instructions: instructions, tracer: Self.shipTracer())
 		let end = path.points.last ?? .zero
 
 		return end.manhattanLength
@@ -83,7 +86,7 @@ extension Day12 {
 	mutating func part2() -> Any {
 		logPart("Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?")
 
-		let path = Path(instructions: input, tracer: Self.waypointTracer(waypoint: [10, 1]))
+		let path = Path(instructions: instructions, tracer: Self.waypointTracer(waypoint: [10, 1]))
 		let end = path.points.last ?? .zero
 
 		return end.manhattanLength

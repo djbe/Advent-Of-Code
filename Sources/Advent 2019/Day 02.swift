@@ -14,9 +14,12 @@ private extension Program {
 }
 
 struct Day02: Day {
-	var name: String { "1202 Program Alarm" }
+	static let name = "1202 Program Alarm"
+	private var program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

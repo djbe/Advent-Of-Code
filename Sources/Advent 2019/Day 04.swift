@@ -7,9 +7,13 @@ import Algorithms
 import Common
 
 struct Day04: Day {
-	var name: String { "Secure Container" }
+	static let name = "Secure Container"
+	private let range: ClosedRange<Int>
 
-	private static let range = 382_345...843_167
+	init(input: Input) {
+		let numbers = input.words(separatedBy: "-").compactMap(\.integer)
+		range = numbers[0]...numbers[1]
+	}
 }
 
 // MARK: - Part 1
@@ -17,7 +21,7 @@ struct Day04: Day {
 extension Day04 {
 	func isValid(password: Int) -> Bool {
 		let string = "\(password)"
-		guard Self.range.contains(password) else { return false }
+		guard range.contains(password) else { return false }
 		guard zip(string, string.dropFirst()).allSatisfy({ $0 <= $1 }) else { return false }
 		return zip(string, string.dropFirst()).contains { $0 == $1 }
 	}
@@ -25,7 +29,7 @@ extension Day04 {
 	mutating func part1() -> Any {
 		logPart("How many different passwords within the range given in your puzzle input meet these criteria?")
 
-		return Self.range.filter(isValid(password:)).count
+		return range.filter(isValid(password:)).count
 	}
 }
 
@@ -44,6 +48,6 @@ extension Day04 {
 	mutating func part2() -> Any {
 		logPart("How many different passwords within the range given in your puzzle input meet all of the criteria?")
 
-		return Self.range.filter(betterIsValid(password:)).count
+		return range.filter(betterIsValid(password:)).count
 	}
 }

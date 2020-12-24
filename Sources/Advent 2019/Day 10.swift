@@ -7,16 +7,22 @@ import Algorithms
 import Common
 
 struct Day10: Day {
-	var name: String { "Monitoring Station" }
+	static let name = "Monitoring Station"
 
-	private lazy var field = Matrix<Bool>(lines: loadInputFile())
-	private lazy var asteroids: [Matrix.Point] = field.iterate().filter { field[$0] }
-	private lazy var station: Matrix.Point = .zero
+	private let field: Matrix<Bool>
+	private let asteroids: [Matrix<Bool>.Point]
+	private var station: Matrix.Point = .zero
+
+	init(input: Input) {
+		let field = Matrix(input)
+		self.field = field
+		asteroids = field.filter { field[$0] }
+	}
 }
 
 // MARK: - Part 1
 
-private extension Matrix where T == Bool {
+private extension Matrix where Element == Bool {
 	func haveLineOfSightBetween(_ lhs: Point, _ rhs: Point) -> Bool {
 		!step(from: lhs, to: rhs).dropFirst().dropLast().contains { self[$0] }
 	}
@@ -41,7 +47,7 @@ extension Day10 {
 
 // MARK: - Part 2
 
-private extension Matrix where T == Bool {
+private extension Matrix where Element == Bool {
 	func countAsteroidsBetween(_ lhs: Point, _ rhs: Point) -> Int {
 		step(from: lhs, to: rhs).dropFirst().dropLast().map { self[$0] ? 1 : 0 }.sum
 	}

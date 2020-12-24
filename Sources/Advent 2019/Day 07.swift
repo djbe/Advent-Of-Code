@@ -36,9 +36,12 @@ private final class Circuit {
 }
 
 struct Day07: Day {
-	var name: String { "Amplification Circuit" }
+	static let name = "Amplification Circuit"
+	private let program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

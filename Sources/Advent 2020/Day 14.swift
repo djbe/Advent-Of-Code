@@ -22,23 +22,26 @@ private enum Instruction {
 	case setMask(String)
 	case write(address: Int, value: Int)
 
-	init<T: StringProtocol>(_ value: T) {
-		let comps = value.components(separatedBy: " = ")
-		if comps[0] == "mask" {
-			self = .setMask(comps[1])
+	init<T: StringProtocol>(_ line: Line<T>) {
+		let comps = line.words(separatedBy: " = ")
+		if comps[0].raw == "mask" {
+			self = .setMask(comps[1].raw)
 		} else {
 			self = .write(
-				address: Int(comps[0].dropFirst(4).dropLast()) ?? 0,
-				value: Int(comps[1]) ?? 0
+				address: Int(comps[0].raw.dropFirst(4).dropLast()) ?? 0,
+				value: comps[1].integer ?? 0
 			)
 		}
 	}
 }
 
 struct Day14: Day {
-	var name: String { "Docking Data" }
+	static let name = "Docking Data"
+	private let program: [Instruction]
 
-	private lazy var program: [Instruction] = loadInputFile().map(Instruction.init)
+	init(input: Input) {
+		program = input.lines.map(Instruction.init)
+	}
 }
 
 // MARK: - Part 1

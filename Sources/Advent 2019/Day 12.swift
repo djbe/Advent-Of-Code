@@ -10,8 +10,8 @@ private final class Object {
 	var position: Vector3<Int>
 	var velocity: Vector3<Int> = Vector3([0, 0, 0])
 
-	init<T: StringProtocol>(_ input: T) {
-		position = Vector3(input.dropFirst().dropLast().split(separator: ",").compactMap { Int(String($0.split(separator: "=")[1])) })
+	init<T: StringProtocol>(_ input: Line<T>) {
+		position = Vector3(input.raw.dropFirst().dropLast().split(separator: ",").compactMap { Int(String($0.split(separator: "=")[1])) })
 	}
 
 	func applyGravity(with object: Object) {
@@ -28,8 +28,8 @@ private final class Object {
 private final class System: CustomStringConvertible {
 	var objects: [Object]
 
-	init<T: StringProtocol>(lines: [T]) {
-		objects = lines.map(Object.init)
+	init(input: Input) {
+		objects = input.lines.map(Object.init)
 	}
 
 	var description: String {
@@ -45,9 +45,9 @@ private final class System: CustomStringConvertible {
 }
 
 struct Day12: Day {
-	var name: String { "Sunny with a Chance of Asteroids" }
+	static let name = "Sunny with a Chance of Asteroids"
 
-	private lazy var input = loadInputFile()
+	let input: Input
 }
 
 // MARK: - Part 1
@@ -63,7 +63,7 @@ extension Day12 {
 	mutating func part1() -> Any {
 		logPart("What is the total energy in the system after simulating the moons given in your scan for 1000 steps?")
 
-		let system = System(lines: input)
+		let system = System(input: input)
 		for _ in 1...1_000 {
 			system.step()
 		}
@@ -101,7 +101,7 @@ extension Day12 {
 	mutating func part2() -> Any {
 		logPart("How many steps does it take to reach the first state that exactly matches a previous state?")
 
-		let system = System(lines: input)
+		let system = System(input: input)
 		let cycles = system.findStepsForCycle()
 		log(.info, "Found cycles for each axis: \(cycles)")
 

@@ -9,8 +9,8 @@ import Common
 private struct Map {
 	private let map: [String: [String]]
 
-	init<T: StringProtocol>(_ data: [T]) {
-		let orbits = data.map { $0.components(separatedBy: ")") }.map { ($0[0], [$0[1]]) }
+	init<T: StringProtocol>(_ data: [Line<T>]) {
+		let orbits = data.map { $0.words(separatedBy: ")") }.map { ($0[0].raw, [$0[1].raw]) }
 		map = Dictionary(orbits) { $0 + $1 }
 	}
 
@@ -20,9 +20,12 @@ private struct Map {
 }
 
 struct Day06: Day {
-	var name: String { "Universal Orbit Map" }
+	static let name = "Universal Orbit Map"
+	private let map: Map
 
-	private lazy var map = Map(loadInputFile())
+	init(input: Input) {
+		map = Map(input.lines)
+	}
 }
 
 // MARK: - Part 1

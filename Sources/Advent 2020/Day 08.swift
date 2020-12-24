@@ -79,9 +79,12 @@ extension Computer {
 }
 
 struct Day08: Day {
-	var name: String { "Handheld Halting" }
+	static let name = "Handheld Halting"
+	private let program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.rawLines)
+	}
 }
 
 // MARK: - Part 1

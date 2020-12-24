@@ -46,9 +46,12 @@ private struct Solver {
 }
 
 struct Day18: Day {
-	var name: String { "Operation Order" }
+	static let name = "Operation Order"
+	private let lines: [String]
 
-	private lazy var input = loadInputFile()
+	init(input: Input) {
+		lines = input.rawLines.map(String.init)
+	}
 }
 
 // MARK: - Part 1
@@ -58,7 +61,7 @@ extension Day18 {
 		logPart("Before you can help with the homework, you need to understand it yourself. Evaluate the expression on each line of the homework; what is the sum of the resulting values?")
 
 		let solver = Solver(order: #"(\d+)(?: (\+|\*) (\d+))+"#)
-		let results = input.map(String.init).map(solver.resolve(line:))
+		let results = lines.map(solver.resolve(line:))
 
 		return results.sum
 	}
@@ -71,7 +74,7 @@ extension Day18 {
 		logPart("What do you get if you add up the results of evaluating the homework problems using these new rules?")
 
 		let solver = Solver(order: #"(\d+)(?: (\+) (\d+))+"#, #"(\d+)(?: (\*) (\d+))+"#)
-		let results = input.map(String.init).map(solver.resolve(line:))
+		let results = lines.map(solver.resolve(line:))
 
 		return results.sum
 	}

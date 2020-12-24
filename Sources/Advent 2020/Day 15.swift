@@ -8,9 +8,12 @@ import Common
 import Foundation
 
 struct Day15: Day {
-	var name: String { "Rambunctious Recitation" }
+	static let name = "Rambunctious Recitation"
+	private let numbers: [Int]
 
-	private lazy var input = [2, 0, 1, 7, 4, 14, 18]
+	init(input: Input) {
+		numbers = input.csvIntegers
+	}
 }
 
 // MARK: - Part 1
@@ -32,7 +35,7 @@ extension Day15 {
 	mutating func part1() -> Any {
 		logPart("Given your starting numbers, what will be the 2020th number spoken?")
 
-		return calculateNumber(input: input, iterations: 2_020)
+		return calculateNumber(input: numbers, iterations: 2_020)
 	}
 }
 
@@ -42,6 +45,6 @@ extension Day15 {
 	mutating func part2() -> Any {
 		logPart("Given your starting numbers, what will be the 30000000th number spoken?")
 
-		return calculateNumber(input: input, iterations: 30_000_000)
+		return calculateNumber(input: numbers, iterations: 30_000_000)
 	}
 }

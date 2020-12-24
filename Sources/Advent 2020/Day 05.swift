@@ -11,8 +11,8 @@ private struct BoardingPass {
 	private let row: Int
 	private let column: Int
 
-	init<T: StringProtocol>(_ data: T) {
-		let data = data
+	init<T: StringProtocol>(_ line: Line<T>) {
+		let data = line.raw
 			.replacingCharacters(from: CharacterSet(charactersIn: "LF"), with: "0")
 			.replacingCharacters(from: CharacterSet(charactersIn: "BR"), with: "1")
 
@@ -26,9 +26,12 @@ private struct BoardingPass {
 }
 
 struct Day05: Day {
-	var name: String { "Binary Boarding" }
+	static let name = "Binary Boarding"
+	private let passes: [BoardingPass]
 
-	private lazy var passes = loadInputFile().map(BoardingPass.init)
+	init(input: Input) {
+		passes = input.lines.map(BoardingPass.init)
+	}
 }
 
 // MARK: - Part 1

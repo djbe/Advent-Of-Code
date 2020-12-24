@@ -7,10 +7,13 @@ import Algorithms
 import Common
 
 struct Day09: Day {
-	var name: String { "Encoding Error" }
+	static let name = "Encoding Error"
+	private let numbers: [Int]
+	private var invalidNumber = 0
 
-	private lazy var numbers = loadInputFile().compactMap { Int(String($0)) }
-	private lazy var invalidNumber = 0
+	init(input: Input) {
+		numbers = input.lines.compactMap(\.integer)
+	}
 }
 
 // MARK: - Part 1

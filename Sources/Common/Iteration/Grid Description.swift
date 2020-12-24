@@ -6,7 +6,7 @@
 import Foundation
 
 public extension Matrix {
-	func descriptionMapping(mapper: (_ point: Point, _ value: T) -> Character) -> String {
+	func descriptionMapping(mapper: (_ point: Point, _ value: Element) -> Character) -> String {
 		map(mapper).data.map { String($0) }.joined(separator: "\n")
 	}
 }

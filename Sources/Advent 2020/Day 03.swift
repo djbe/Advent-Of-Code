@@ -6,7 +6,7 @@
 import Algorithms
 import Common
 
-private extension Matrix where T == Bool {
+private extension Matrix where Element == Bool {
 	func countTrees(slope: Point) -> Int {
 		step(from: .zero, direction: slope, wrapX: true)
 			.map { self[$0] ? 1 : 0 }
@@ -15,9 +15,12 @@ private extension Matrix where T == Bool {
 }
 
 struct Day03: Day {
-	var name: String { "Toboggan Trajectory" }
+	static let name = "Toboggan Trajectory"
+	private let grid: Matrix<Bool>
 
-	private lazy var grid = Matrix<Bool>(lines: loadInputFile())
+	init(input: Input) {
+		grid = Matrix<Bool>(input)
+	}
 }
 
 // MARK: - Part 1

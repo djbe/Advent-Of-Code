@@ -13,7 +13,8 @@ struct Advent: ParsableCommand {
 	])
 
 	func run() throws {
-		guard var year = Self.configuration.subcommands.last?.init() else { return }
+		guard let yearType = Self.configuration.subcommands.last else { return }
+		var year = yearType.parseOrExit()
 		try year.run()
 	}
 }

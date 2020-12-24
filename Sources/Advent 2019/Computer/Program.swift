@@ -3,12 +3,12 @@
 // Copyright © 2020 David Jennes
 //
 
-import Foundation
+import Common
 
 struct Program {
 	var data: [Int]
 
-	init<T: StringProtocol>(code: [T]) {
-		data = code.joined().split(separator: ",").map { Int($0) ?? 0 }
+	init<T: StringProtocol>(code: [Line<T>]) {
+		data = code.map(\.csvIntegers).flatMap { $0 }
 	}
 }

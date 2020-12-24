@@ -30,9 +30,9 @@ private struct RuleSet {
 
 	var rules: [Int: Rule]
 
-	init<T: StringProtocol>(lines: [T]) {
+	init<T: StringProtocol>(lines: [Line<T>]) {
 		rules = Dictionary(uniqueKeysWithValues: lines.map { line in
-			let comps = line.components(separatedBy: ": ")
+			let comps = line.raw.components(separatedBy: ": ")
 			let identifier = Int(comps[0]) ?? 0
 			return (identifier, Rule(comps[1]))
 		})
@@ -44,11 +44,14 @@ private struct RuleSet {
 }
 
 struct Day19: Day {
-	var name: String { "Monster Messages" }
+	static let name = "Monster Messages"
+	private let ruleset: RuleSet
+	private let messages: [Substring]
 
-	private lazy var input = loadInputFile(omittingEmptySubsequences: false).chunked { !$1.isEmpty }
-	private lazy var ruleset = RuleSet(lines: Array(input[0]))
-	private lazy var messages = input[1]
+	init(input: Input) {
+		ruleset = RuleSet(lines: input.sections[0])
+		messages = input.sections[1].map(\.raw)
+	}
 }
 
 // MARK: - Part 1

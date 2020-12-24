@@ -22,9 +22,12 @@ struct FFT {
 }
 
 struct Day16: Day {
-	var name: String { "Flawed Frequency Transmission" }
+	static let name = "Flawed Frequency Transmission"
+	private let numbers: [Int]
 
-	private lazy var numbers = loadInputFile()[0].compactMap { Int(String($0)) }
+	init(input: Input) {
+		numbers = input.characters.compactMap(\.wholeNumberValue)
+	}
 }
 
 // MARK: - Part 1

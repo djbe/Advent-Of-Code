@@ -7,9 +7,12 @@ import Common
 import Foundation
 
 struct Day01: Day {
-	var name: String { "Report Repair" }
+	static let name = "Report Repair"
+	private let numbers: [Int]
 
-	private lazy var input = loadInputFile().compactMap { Int(String($0)) }
+	init(input: Input) {
+		numbers = input.lines.compactMap(\.integer)
+	}
 }
 
 // MARK: - Part 1
@@ -24,7 +27,7 @@ extension Day01 {
 	mutating func part1() -> Any {
 		logPart("Find the two entries that sum to 2020; what do you get if you multiply them together?")
 
-		let matching = findMatchingTo2020(numbers: input, count: 2)
+		let matching = findMatchingTo2020(numbers: numbers, count: 2)
 		return matching.product
 	}
 }
@@ -35,7 +38,7 @@ extension Day01 {
 	mutating func part2() -> Any {
 		logPart("What is the product of the three entries that sum to 2020?")
 
-		let matching = findMatchingTo2020(numbers: input, count: 3)
+		let matching = findMatchingTo2020(numbers: numbers, count: 3)
 		return matching.product
 	}
 }

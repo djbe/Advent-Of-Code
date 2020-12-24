@@ -60,9 +60,12 @@ extension RepairDroid {
 }
 
 struct Day15: Day {
-	var name: String { "Oxygen System" }
+	static let name = "Oxygen System"
+	private let program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

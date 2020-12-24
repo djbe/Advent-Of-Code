@@ -17,10 +17,9 @@ private struct Game: Equatable {
 		self.player2 = Array(player2)
 	}
 
-	init<T: StringProtocol>(_ lines: [T]) {
-		let cleaned = lines.chunked { !$1.isEmpty }.map { $0.filter { !$0.isEmpty } }
-		player1 = cleaned[0].dropFirst().compactMap { Int(String($0)) }
-		player2 = cleaned[1].dropFirst().compactMap { Int(String($0)) }
+	init<T: StringProtocol>(_ sections: [[Line<T>]]) {
+		player1 = sections[0].dropFirst().compactMap(\.integer)
+		player2 = sections[1].dropFirst().compactMap(\.integer)
 	}
 
 	mutating func playRound() {
@@ -43,9 +42,12 @@ private struct Game: Equatable {
 }
 
 struct Day22: Day {
-	var name: String { "Crab Combat" }
+	static let name = "Crab Combat"
+	private let game: Game
 
-	private lazy var game = Game(loadInputFile(omittingEmptySubsequences: false))
+	init(input: Input) {
+		game = Game(input.sections)
+	}
 }
 
 // MARK: - Part 1

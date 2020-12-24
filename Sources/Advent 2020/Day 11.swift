@@ -14,13 +14,13 @@ private final class World: CustomStringConvertible {
 	let seatMap: [Point: [Point]]
 	var people: Matrix<Int>
 
-	init<T: StringProtocol>(lines: [T], seatFinder: (Point, Matrix<Bool>) -> [Point]) {
-		let seats = Matrix<Bool>(lines.map { $0.map { $0 != "." } })
-		let allSeats = seats.iterate().filter { seats[$0] }
+	init(input: Input, seatFinder: (Point, Matrix<Bool>) -> [Point]) {
+		let seats = Matrix<Bool>(input)
+		let allSeats = seats.filter { seats[$0] }
 
 		self.seats = seats
 		seatMap = Dictionary(uniqueKeysWithValues: allSeats.map { ($0, seatFinder($0, seats)) })
-		people = .init(lines.map { Array(repeating: 0, count: $0.count) })
+		people = seats.map { _, _ in 0 }
 	}
 
 	var description: String {
@@ -53,14 +53,17 @@ private final class World: CustomStringConvertible {
 	}
 
 	var occupiedSeats: Int {
-		people.iterate().map { people[$0] }.sum
+		people.map { people[$0] }.sum
 	}
 }
 
 struct Day11: Day {
-	var name: String { "Seating System" }
+	static let name = "Seating System"
+	private let input: Input
 
-	private lazy var input = loadInputFile()
+	init(input: Input) {
+		self.input = input
+	}
 }
 
 // MARK: - Part 1
@@ -77,7 +80,7 @@ extension Day11 {
 	mutating func part1() -> Any {
 		logPart("Simulate your seating area by applying the seating rules repeatedly until no seats change state. How many seats end up occupied?")
 
-		let world = World(lines: input, seatFinder: World.seatsAdjacent(to:seats:))
+		let world = World(input: input, seatFinder: World.seatsAdjacent(to:seats:))
 		world.stepUntilStable(maxAdjacent: 4)
 
 		return world.occupiedSeats
@@ -86,7 +89,7 @@ extension Day11 {
 
 // MARK: - Part 2
 
-extension Matrix where T == Bool {
+extension Matrix where Element == Bool {
 	func find(from start: Point, direction: Point) -> Point? {
 		step(from: start, direction: direction).dropFirst()
 			.first { self[$0] }
@@ -103,7 +106,7 @@ extension Day11 {
 	mutating func part2() -> Any {
 		logPart("Given the new visibility method and the rule change for occupied seats becoming empty, once equilibrium is reached, how many seats end up occupied?")
 
-		let world = World(lines: input, seatFinder: World.seatsWithLineOfSight(to:seats:))
+		let world = World(input: input, seatFinder: World.seatsWithLineOfSight(to:seats:))
 		world.stepUntilStable(maxAdjacent: 5)
 
 		return world.occupiedSeats

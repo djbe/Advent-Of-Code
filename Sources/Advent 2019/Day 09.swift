@@ -7,9 +7,12 @@ import Algorithms
 import Common
 
 struct Day09: Day {
-	var name: String { "Sensor Boost" }
+	static let name = "Sensor Boost"
+	private let program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

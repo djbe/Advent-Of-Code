@@ -10,21 +10,21 @@ private struct Path {
 	typealias Point = Vector2<Int>
 	private let points: [Point]
 
-	init<T: StringProtocol>(instructions: T) {
-		points = instructions.split(separator: ",").reduce(into: []) { points, movement in
+	init<T: StringProtocol>(instructions: Line<T>) {
+		points = instructions.csvWords.reduce(into: []) { points, movement in
 			points.append(contentsOf: Self.trace(movement: movement, from: points.last ?? .zero))
 		}
 	}
 
-	private static func trace<T: StringProtocol>(movement: T, from point: Point) -> [Point] {
-		let distance = Int(movement.dropFirst()) ?? 0
+	private static func trace(movement: Word, from point: Point) -> [Point] {
+		let distance = Int(movement.raw.dropFirst()) ?? 0
 
-		switch movement[0] {
+		switch movement.characters[0] {
 		case "U": return (point.y..<(point.y + distance)).map { Point(x: point.x, y: $0 + 1) }
 		case "D": return ((point.y - distance + 1)...point.y).reversed().map { Point(x: point.x, y: $0 - 1) }
 		case "R": return (point.x..<(point.x + distance)).map { Point(x: $0 + 1, y: point.y) }
 		case "L": return ((point.x - distance + 1)...point.x).reversed().map { Point(x: $0 - 1, y: point.y) }
-		default: preconditionFailure("Uknown direction \(movement[0])")
+		default: preconditionFailure("Uknown direction \(movement)")
 		}
 	}
 
@@ -39,10 +39,13 @@ private struct Path {
 }
 
 struct Day03: Day {
-	var name: String { "Crossed Wires" }
+	static let name = "Crossed Wires"
+	private let paths: [Path]
+	private var intersections: Set<Path.Point> = []
 
-	private lazy var paths = loadInputFile().map(Path.init)
-	private lazy var intersections: Set<Path.Point> = []
+	init(input: Input) {
+		paths = input.lines.map(Path.init(instructions:))
+	}
 }
 
 // MARK: - Part 1

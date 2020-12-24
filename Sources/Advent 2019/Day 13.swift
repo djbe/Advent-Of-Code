@@ -72,9 +72,12 @@ private final class Arcade {
 }
 
 struct Day13: Day {
-	var name: String { "Care Package" }
+	static let name = "Care Package"
+	private var program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

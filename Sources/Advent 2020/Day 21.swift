@@ -11,9 +11,9 @@ private struct Menu {
 	var allergens: [String: Set<String>] = [:]
 	let food: [Set<String>]
 
-	init<T: StringProtocol>(_ lines: [T]) {
+	init<T: StringProtocol>(_ lines: [Line<T>]) {
 		let parsedLines: [(ingredients: Set<String>, allergens: Set<String>)] = lines.map {
-			let comps = $0.dropLast().components(separatedBy: " (")
+			let comps = $0.raw.dropLast().components(separatedBy: " (")
 			return (
 				Set(comps[0].split(separator: " ").map(String.init)),
 				Set(comps[1].dropFirst(9).components(separatedBy: ", "))
@@ -44,9 +44,12 @@ private struct Menu {
 }
 
 struct Day21: Day {
-	var name: String { "Allergen Assessment" }
+	static let name = "Allergen Assessment"
+	private var menu: Menu
 
-	private lazy var menu = Menu(loadInputFile())
+	init(input: Input) {
+		menu = Menu(input.lines)
+	}
 }
 
 // MARK: - Part 1

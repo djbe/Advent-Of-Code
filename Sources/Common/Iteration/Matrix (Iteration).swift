@@ -5,9 +5,9 @@
 
 import Foundation
 
-public extension Matrix {
-	struct SimpleIterator: Sequence, IteratorProtocol {
-		let matrix: Matrix<T>
+extension Matrix: Sequence {
+	public struct SimpleIterator: Sequence, IteratorProtocol {
+		let matrix: Matrix<Element>
 		var current: Matrix.Point? = [0, 0]
 
 		public mutating func next() -> Matrix.Point? {
@@ -29,14 +29,14 @@ public extension Matrix {
 		}
 	}
 
-	func iterate() -> SimpleIterator {
+	public func makeIterator() -> SimpleIterator {
 		SimpleIterator(matrix: self)
 	}
 
-	func map<O>(_ transform: (_ point: Point, _ value: T) -> O) -> Matrix<O> {
+	public func map<O>(_ transform: (_ point: Point, _ value: Element) -> O) -> Matrix<O> {
 		var result = [[O]](repeating: [], count: data.count)
 
-		for point in iterate() {
+		for point in self {
 			result[point.y].append(transform(point, self[point]))
 		}
 
@@ -46,12 +46,12 @@ public extension Matrix {
 
 public extension Matrix {
 	struct SlidingWindow: Sequence, IteratorProtocol {
-		let matrix: Matrix<T>
+		let matrix: Matrix<Element>
 		let size: Matrix.Point
 		let range: (row: ClosedRange<Int>, column: ClosedRange<Int>)
 		var current: Matrix.Point? = [0, 0]
 
-		init(matrix: Matrix<T>, size: Point) {
+		init(matrix: Matrix<Element>, size: Point) {
 			self.matrix = matrix
 			self.size = size
 			range = (
@@ -60,7 +60,7 @@ public extension Matrix {
 			)
 		}
 
-		public mutating func next() -> (point: Point, contents: [ArraySlice<T>])? {
+		public mutating func next() -> (point: Point, contents: [ArraySlice<Element>])? {
 			guard let current = current else { return nil }
 
 			defer {
@@ -89,13 +89,13 @@ public extension Matrix {
 
 public extension Matrix {
 	struct PointStepper: Sequence, IteratorProtocol {
-		let matrix: Matrix<T>
+		let matrix: Matrix<Element>
 		let direction: Point
 		let end: Point?
 		let wrap: (x: Bool, y: Bool)
 		var current: Point?
 
-		init(matrix: Matrix<T>, start: Point, direction: Point, end: Point?, wrapX: Bool, wrapY: Bool) {
+		init(matrix: Matrix<Element>, start: Point, direction: Point, end: Point?, wrapX: Bool, wrapY: Bool) {
 			self.matrix = matrix
 			self.direction = direction
 			self.end = end

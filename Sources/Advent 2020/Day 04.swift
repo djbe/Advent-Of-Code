@@ -5,26 +5,24 @@
 
 import Algorithms
 import Common
+import Regex
 
 private struct Passport {
 	private let data: [String: String]
 
-	init?<T: StringProtocol>(_ lines: ArraySlice<T>) {
+	init?<T: StringProtocol>(_ lines: [Line<T>]) {
 		let keyValues = lines
-			.flatMap { $0.split(separator: " ") }
+			.flatMap(\.rawWords)
 			.map { (String($0.split(separator: ":")[0]), String($0.split(separator: ":")[1])) }
 
 		guard !keyValues.isEmpty else { return nil }
 		data = .init(uniqueKeysWithValues: keyValues)
 	}
-
-	static func load<T: StringProtocol>(from input: [T]) -> [Passport] {
-		input.chunked { _, rhs in !rhs.isEmpty }
-			.compactMap(Passport.init)
-	}
 }
 
 extension Passport {
+	private static let heightRegex = Regex(#"^[0-9]+(cm|in)$"#)
+
 	var byr: Int { Int(data["byr", default: ""]) ?? .min }
 	var iyr: Int { Int(data["iyr", default: ""]) ?? .min }
 	var eyr: Int { Int(data["eyr", default: ""]) ?? .min }
@@ -33,15 +31,18 @@ extension Passport {
 	var pid: String { data["pid", default: ""] }
 	var hgt: (value: Int, unit: String) {
 		let value = data["hgt", default: ""]
-		guard value.matches(regex: #"^[0-9]+(cm|in)$"#) else { return (.min, "") }
+		guard Self.heightRegex.matches(value) else { return (.min, "") }
 		return (Int(value.dropLast(2)) ?? .min, String(value.suffix(2)))
 	}
 }
 
 struct Day04: Day {
-	var name: String { "Passport Processing" }
+	static let name = "Passport Processing"
+	private let passports: [Passport]
 
-	private lazy var passports = Passport.load(from: loadInputFile(omittingEmptySubsequences: false))
+	init(input: Input) {
+		passports = input.sections.compactMap(Passport.init)
+	}
 }
 
 // MARK: - Part 1
@@ -70,9 +71,10 @@ enum Validators {
 		func validate(_ value: Int) -> Bool { range.contains(value) }
 	}
 
-	struct Regex {
-		let regex: String
-		func validate(_ value: String) -> Bool { value.matches(regex: regex) }
+	struct Matcher {
+		let regex: Regex
+		init(regex string: StaticString) { regex = Regex(string) }
+		func validate(_ value: String) -> Bool { regex.matches(value) }
 	}
 
 	struct Height {
@@ -92,9 +94,9 @@ extension Passport {
 			Validators.IntRange(range: 1_920...2_002).validate(byr) &&
 			Validators.IntRange(range: 2_010...2_020).validate(iyr) &&
 			Validators.IntRange(range: 2_020...2_030).validate(eyr) &&
-			Validators.Regex(regex: #"^#[0-9a-f]{6}$"#).validate(hcl) &&
-			Validators.Regex(regex: #"^amb|blu|brn|gry|grn|hzl|oth$"#).validate(ecl) &&
-			Validators.Regex(regex: #"^[0-9]{9}$"#).validate(pid) &&
+			Validators.Matcher(regex: #"^#[0-9a-f]{6}$"#).validate(hcl) &&
+			Validators.Matcher(regex: #"^amb|blu|brn|gry|grn|hzl|oth$"#).validate(ecl) &&
+			Validators.Matcher(regex: #"^[0-9]{9}$"#).validate(pid) &&
 			Validators.Height().validate(hgt)
 	}
 }

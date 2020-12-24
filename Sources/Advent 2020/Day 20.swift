@@ -18,10 +18,9 @@ private struct Tile {
 		didSet { calculateEdges() }
 	}
 
-	init<T: StringProtocol>(_ lines: ArraySlice<T>) {
-		let cleaned = lines.filter { !$0.isEmpty }
-		identifier = Int(String(cleaned[0].dropFirst(5).dropLast())) ?? 0
-		matrix = Matrix(lines: cleaned.dropFirst())
+	init<T: StringProtocol>(_ lines: [Line<T>]) {
+		identifier = Int(String(lines[0].raw.dropFirst(5).dropLast())) ?? 0
+		matrix = Matrix(lines.dropFirst())
 		calculateEdges()
 	}
 
@@ -58,8 +57,8 @@ extension Tile: Hashable {
 private final class Puzzle {
 	let tiles: Set<Tile>
 
-	init<T: StringProtocol>(_ input: [T]) {
-		tiles = Set(input.chunked { !$1.isEmpty }.dropLast().map(Tile.init))
+	init(_ input: Input) {
+		tiles = Set(input.sections.map(Tile.init))
 	}
 
 	var corners: [Tile] {
@@ -71,9 +70,12 @@ private final class Puzzle {
 }
 
 struct Day20: Day {
-	var name: String { "Jurassic Jigsaw" }
+	static let name = "Jurassic Jigsaw"
+	private let puzzle: Puzzle
 
-	private lazy var puzzle = Puzzle(loadInputFile(omittingEmptySubsequences: false))
+	init(input: Input) {
+		puzzle = Puzzle(input)
+	}
 }
 
 // MARK: - Part 1
@@ -166,8 +168,8 @@ extension Puzzle {
 	}
 }
 
-private extension Matrix where T == Bool {
-	func count(monster: Matrix<T>) -> Int {
+private extension Matrix where Element == Bool {
+	func count(monster: Matrix<Element>) -> Int {
 		slidingWindow(size: monster.size)
 			.map { _, mapSlice in
 				let matches = zip(monster.data, mapSlice).allSatisfy { monster, map in
@@ -180,11 +182,11 @@ private extension Matrix where T == Bool {
 }
 
 extension Day20 {
-	static let monster = Matrix(lines: """
+	static let monster = Matrix(Input("""
 	..................#.
 	#....##....##....###
 	.#..#..#..#..#..#...
-	""".split(separator: "\n"))
+	"""))
 
 	mutating func part2() -> Any {
 		logPart("How many # are not part of a sea monster?")

@@ -5,18 +5,22 @@
 
 import Foundation
 
-public struct Matrix<T> {
+public struct Matrix<Element> {
 	public typealias Point = Vector2<Int>
-	public var data: [[T]]
+	public var data: [[Element]]
 
-	public init(_ data: [[T]]) {
+	public init(_ data: [[Element]]) {
 		self.data = data
 	}
 }
 
-public extension Matrix where T == Bool {
-	init<T: Collection>(lines: T) where T.Element: StringProtocol {
-		self.init(lines.map { $0.map { $0 != "." } })
+public extension Matrix where Element == Bool {
+	init<C: Collection, T: StringProtocol>(_ lines: C, stringType: T.Type = T.self) where C.Element == Line<T> {
+		self.init(lines.map { $0.characters.map { $0 != "." } })
+	}
+
+	init(_ input: Input) {
+		self.init(input.lines)
 	}
 }
 
@@ -29,12 +33,12 @@ public extension Matrix {
 		data.indices.contains(point.y) && data[point.y].indices.contains(point.x)
 	}
 
-	subscript(point: Point) -> T {
+	subscript(point: Point) -> Element {
 		get { data[point.y][point.x] }
 		set { data[point.y][point.x] = newValue }
 	}
 
-	func get(_ point: Point) -> T? {
+	func get(_ point: Point) -> Element? {
 		guard has(point) else { return nil }
 		return data[point.y][point.x]
 	}
@@ -49,7 +53,7 @@ public extension Matrix {
 		}
 	}
 
-	mutating func rotated() -> Matrix<T> {
+	mutating func rotated() -> Matrix<Element> {
 		var result = self
 		result.rotate()
 		return result
@@ -59,7 +63,7 @@ public extension Matrix {
 		data = data.map { $0.reversed() }
 	}
 
-	func mirrorred() -> Matrix<T> {
+	func mirrorred() -> Matrix<Element> {
 		var result = self
 		result.mirror()
 		return result
@@ -69,7 +73,7 @@ public extension Matrix {
 		data.reverse()
 	}
 
-	func flipped() -> Matrix<T> {
+	func flipped() -> Matrix<Element> {
 		var result = self
 		result.flip()
 		return result
@@ -78,7 +82,7 @@ public extension Matrix {
 
 public extension Matrix {
 	/// Try  to rotate and/or flip the grid until it satisfies the given condition
-	func tryToFit(check: (Matrix<T>) -> Bool) -> Bool {
+	func tryToFit(check: (Matrix<Element>) -> Bool) -> Bool {
 		var result = self
 		if check(result) { return true }
 
@@ -99,5 +103,5 @@ public extension Matrix {
 	}
 }
 
-extension Matrix: Equatable where T: Equatable {}
-extension Matrix: Hashable where T: Hashable {}
+extension Matrix: Equatable where Element: Equatable {}
+extension Matrix: Hashable where Element: Hashable {}

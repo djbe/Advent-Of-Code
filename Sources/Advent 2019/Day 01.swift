@@ -7,9 +7,12 @@ import Common
 import Foundation
 
 struct Day01: Day {
-	var name: String { "The Tyranny of the Rocket Equation" }
+	static let name = "The Tyranny of the Rocket Equation"
+	private let numbers: [Int]
 
-	private lazy var input = loadInputFile().compactMap { Int(String($0)) }
+	init(input: Input) {
+		numbers = input.lines.compactMap(\.integer)
+	}
 }
 
 // MARK: - Part 1
@@ -22,7 +25,7 @@ extension Day01 {
 	mutating func part1() -> Any {
 		logPart("What is the sum of the fuel requirements for all of the modules on your spacecraft?")
 
-		return input.map(fuelNeeded(for:)).sum
+		return numbers.map(fuelNeeded(for:)).sum
 	}
 }
 
@@ -38,6 +41,6 @@ extension Day01 {
 	mutating func part2() -> Any {
 		logPart("What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking into account the mass of the added fuel?")
 
-		return input.map(accurateFuelNeeded(for:)).sum
+		return numbers.map(accurateFuelNeeded(for:)).sum
 	}
 }

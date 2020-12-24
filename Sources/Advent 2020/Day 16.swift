@@ -11,9 +11,9 @@ private struct Rule: Hashable {
 	let name: String
 	let ranges: [ClosedRange<Int>]
 
-	init<T: StringProtocol>(_ line: T) {
-		name = line.components(separatedBy: ": ")[0]
-		ranges = line.components(separatedBy: ": ")[1].components(separatedBy: " or ").map {
+	init<T: StringProtocol>(_ line: Line<T>) {
+		name = line.raw.components(separatedBy: ": ")[0]
+		ranges = line.raw.components(separatedBy: ": ")[1].components(separatedBy: " or ").map {
 			let lower = Int($0.split(separator: "-")[0]) ?? 0
 			let upper = Int($0.split(separator: "-")[1]) ?? 0
 			return lower...upper
@@ -27,10 +27,6 @@ private struct Rule: Hashable {
 
 private struct Ticket {
 	let numbers: [Int]
-
-	init<T: StringProtocol>(_ line: T) {
-		numbers = line.split(separator: ",").compactMap { Int($0) }
-	}
 }
 
 private struct File {
@@ -38,18 +34,20 @@ private struct File {
 	let myTicket: Ticket
 	let tickets: [Ticket]
 
-	init<T: StringProtocol>(_ lines: [T]) {
-		let chunks = lines.chunked { !$1.isEmpty }
-		rules = chunks[0].map(Rule.init)
-		myTicket = Ticket(chunks[1].last ?? "")
-		tickets = chunks[2].dropFirst(2).map(Ticket.init)
+	init(_ input: Input) {
+		rules = input.sections[0].map(Rule.init)
+		myTicket = Ticket(numbers: input.sections[1].last?.csvIntegers ?? [])
+		tickets = input.sections[2].dropFirst().map(\.csvIntegers).map(Ticket.init(numbers:))
 	}
 }
 
 struct Day16: Day {
-	var name: String { "Ticket Translation" }
+	static let name = "Ticket Translation"
+	private let file: File
 
-	private lazy var file = File(loadInputFile(omittingEmptySubsequences: false))
+	init(input: Input) {
+		file = File(input)
+	}
 }
 
 // MARK: - Part 1

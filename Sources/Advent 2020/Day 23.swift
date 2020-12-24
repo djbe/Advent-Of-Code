@@ -39,9 +39,12 @@ private final class Game {
 }
 
 struct Day23: Day {
-	var name: String { "Crab Cups" }
+	static let name = "Crab Cups"
+	private let numbers: [Int]
 
-	private lazy var input = loadInputFile()[0].compactMap { Int(String($0)) }
+	init(input: Input) {
+		numbers = input.characters.compactMap(\.wholeNumberValue)
+	}
 }
 
 // MARK: - Part 1
@@ -56,7 +59,7 @@ extension Day23 {
 	mutating func part1() -> Any {
 		logPart("Using your labeling, simulate 100 moves. What are the labels on the cups after cup 1?")
 
-		let game = Game(numbers: input)
+		let game = Game(numbers: numbers)
 		game.play(rounds: 100)
 
 		return Array(game.cupsAfterOne).map(\.description).joined()
@@ -69,9 +72,9 @@ extension Day23 {
 	mutating func part2() -> Any {
 		logPart("Determine which two cups will end up immediately clockwise of cup 1. What do you get if you multiply their labels together?")
 
-		let max = input.max() ?? 0
-		let numbers = input + Array((max + 1)...1_000_000)
-		let game = Game(numbers: numbers)
+		let max = numbers.max() ?? 0
+		let expanded = numbers + Array((max + 1)...1_000_000)
+		let game = Game(numbers: expanded)
 
 		game.play(rounds: 10_000_000)
 

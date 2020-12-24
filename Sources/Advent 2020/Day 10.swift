@@ -7,11 +7,17 @@ import Algorithms
 import Common
 
 struct Day10: Day {
-	var name: String { "Adapter Array" }
+	static let name = "Adapter Array"
 
-	private lazy var adapters = loadInputFile().compactMap { Int(String($0)) }.sorted(by: >)
-	private lazy var device = (adapters.first ?? 0) + 3
-	private lazy var sequence = [device] + adapters + [0]
+	private let adapters: [Int]
+	private let device: Int
+	private let sequence: [Int]
+
+	init(input: Input) {
+		adapters = input.lines.compactMap(\.integer).sorted(by: >)
+		device = (adapters.first ?? 0) + 3
+		sequence = [device] + adapters + [0]
+	}
 }
 
 // MARK: - Part 1

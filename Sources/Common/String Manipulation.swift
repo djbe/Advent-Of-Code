@@ -16,11 +16,6 @@ public extension StringProtocol {
 		return self[index(startIndex, offsetBy: offset)]
 	}
 
-	/// Check if this string matches the given regular expression
-	func matches(regex: String) -> Bool {
-		range(of: regex, options: .regularExpression) != nil
-	}
-
 	/// Replace all characters in the given set, with the given replacement string
 	func replacingCharacters(from characterSet: CharacterSet, with replacement: String) -> String {
 		components(separatedBy: characterSet).joined(separator: replacement)

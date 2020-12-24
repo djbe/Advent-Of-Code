@@ -79,9 +79,12 @@ private final class Robot {
 }
 
 struct Day11: Day {
-	var name: String { "Space Police" }
+	static let name = "Space Police"
+	private let program: Program
 
-	private lazy var program = Program(code: loadInputFile())
+	init(input: Input) {
+		program = Program(code: input.lines)
+	}
 }
 
 // MARK: - Part 1

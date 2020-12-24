@@ -18,11 +18,9 @@ private struct PasswordPolicy {
 }
 
 extension PasswordPolicy {
-	static func parse<T: StringProtocol>(_ line: T) -> (policy: PasswordPolicy, remainder: String) {
-		let parts = line.split(separator: " ")
-
-		if let policy = PasswordPolicy(policy: parts[0], character: parts[1]) {
-			return (policy, parts.dropFirst(2).joined(separator: " "))
+	static func parse<T: StringProtocol>(_ line: Line<T>) -> (policy: PasswordPolicy, remainder: String) {
+		if let policy = PasswordPolicy(policy: line.rawWords[0], character: line.rawWords[1]) {
+			return (policy, line.rawWords.dropFirst(2).joined(separator: " "))
 		} else {
 			preconditionFailure("Unknown policy: \(line)")
 		}
@@ -30,9 +28,12 @@ extension PasswordPolicy {
 }
 
 struct Day02: Day {
-	var name: String { "Password Philosophy" }
+	static let name = "Password Philosophy"
+	private let policies: [(policy: PasswordPolicy, remainder: String)]
 
-	private lazy var parsed = loadInputFile().map(PasswordPolicy.parse(_:))
+	init(input: Input) {
+		policies = input.lines.map(PasswordPolicy.parse(_:))
+	}
 }
 
 // MARK: - Part 1
@@ -49,7 +50,7 @@ extension Day02 {
 	mutating func part1() -> Any {
 		logPart("How many passwords are valid according to their policies?")
 
-		return parsed
+		return policies
 			.map { $0.policy.validateOld($0.remainder) ? 1 : 0 }
 			.sum
 	}
@@ -71,7 +72,7 @@ extension Day02 {
 	mutating func part2() -> Any {
 		logPart("How many passwords are valid according to the new interpretation of the policies?")
 
-		return parsed
+		return policies
 			.map { $0.policy.validateNew($0.remainder) ? 1 : 0 }
 			.sum
 	}
