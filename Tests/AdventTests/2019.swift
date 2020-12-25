@@ -245,4 +245,12 @@ final class Test2019: XCTestCase, AdventTester {
 		}
 		waitUntilDone()
 	}
+
+	func testDay17() {
+		normal(day: Day17.self) { day in
+			XCTAssertEqual(String(describing: day.part1()), "8520")
+			XCTAssertEqual(String(describing: day.part2()), "926819")
+		}
+		waitUntilDone()
+	}
 }

@@ -37,10 +37,10 @@ extension Day12 {
 
 		return { instruction, value in
 			switch instruction {
-			case "N": current.point = current.point + [0, value]
-			case "S": current.point = current.point - [0, value]
-			case "E": current.point = current.point + [value, 0]
-			case "W": current.point = current.point - [value, 0]
+			case "N": current.point = current.point + [0, 1] * value
+			case "S": current.point = current.point + [0, -1] * value
+			case "E": current.point = current.point + [1, 0] * value
+			case "W": current.point = current.point + [-1, 0] * value
 			case "F": current.point = current.point + current.direction * value
 			case "L": current.direction = current.direction.rotated(by: deg2rad(value))
 			case "R": current.direction = current.direction.rotated(by: -deg2rad(value))
@@ -69,10 +69,10 @@ extension Day12 {
 
 		return { instruction, value in
 			switch instruction {
-			case "N": current.direction = current.direction + [0, value]
-			case "S": current.direction = current.direction - [0, value]
-			case "E": current.direction = current.direction + [value, 0]
-			case "W": current.direction = current.direction - [value, 0]
+			case "N": current.direction = current.direction + [0, 1] * value
+			case "S": current.direction = current.direction + [0, -1] * value
+			case "E": current.direction = current.direction + [1, 0] * value
+			case "W": current.direction = current.direction + [-1, 0] * value
 			case "F": current.point = current.point + current.direction * value
 			case "L": current.direction = current.direction.rotated(by: deg2rad(value))
 			case "R": current.direction = current.direction.rotated(by: -deg2rad(value))
