@@ -28,7 +28,7 @@ let package = Package(
 			.product(name: "ArgumentParser", package: "swift-argument-parser"),
 			.product(name: "Regex", package: "Regex")
 		]),
-		.testTarget(name: "AdventTests", dependencies: ["Advent 2019", "Advent 2020"])
+		.testTarget(name: "AdventTests", dependencies: ["Advent 2019", "Advent 2020"], resources: [.copy("Input")])
 	],
 	swiftLanguageVersions: [.v5]
 )

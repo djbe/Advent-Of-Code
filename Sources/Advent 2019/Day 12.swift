@@ -46,8 +46,12 @@ private final class System: CustomStringConvertible {
 
 struct Day12: Day {
 	static let name = "Sunny with a Chance of Asteroids"
-
 	let input: Input
+	var steps: Int = 1_000
+
+	init(input: Input) {
+		self.input = input
+	}
 }
 
 // MARK: - Part 1
@@ -64,7 +68,7 @@ extension Day12 {
 		logPart("What is the total energy in the system after simulating the moons given in your scan for 1000 steps?")
 
 		let system = System(input: input)
-		for _ in 1...1_000 {
+		for _ in 1...steps {
 			system.step()
 		}
 

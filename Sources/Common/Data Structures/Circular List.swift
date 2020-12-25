@@ -1,8 +1,6 @@
 //
-//  File.swift
-//
-//
-//  Created by David Jennes on 23/12/2020.
+// Advent
+// Copyright © 2020 David Jennes
 //
 
 import Foundation

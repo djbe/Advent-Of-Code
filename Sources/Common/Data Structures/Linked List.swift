@@ -25,6 +25,7 @@ public final class LinkedList<Element> {
 	}
 
 	public var underestimatedCount: Int { count }
+	// swiftlint:disable:next empty_count
 	public var isEmpty: Bool { count == 0 }
 
 	private func node(at index: Int) -> Node? {
@@ -111,12 +112,12 @@ public extension LinkedList {
 	}
 
 	func popFirst() -> Element? {
-		guard count > 0 else { return nil }
+		guard !isEmpty else { return nil }
 		return removeFirst()
 	}
 
 	func popLast() -> Element? {
-		guard count > 0 else { return nil }
+		guard !isEmpty else { return nil }
 		return removeLast()
 	}
 
@@ -130,25 +131,26 @@ public extension LinkedList {
 
 	func remove(at index: Int) -> Element {
 		guard index >= 0, index < count else { fatalError("Cannot retrieve node at index \(index)") }
-		let n: Node
+		let node: Node
 		if index == 0 {
 			guard let head = head else { fatalError("Head should not be nil") }
-			n = head
+			node = head
 		} else if index == count - 1 {
 			guard let tail = tail else { fatalError("Tail should not be nil") }
-			n = tail
+			node = tail
 		} else {
-			n = node(at: index)!
+			guard let item = self.node(at: index) else { fatalError("Node doesn't exist at index") }
+			node = item
 		}
 
-		let value = n.value
-		let prev = n.prev
-		let next = n.next
+		let value = node.value
+		let prev = node.prev
+		let next = node.next
 
 		prev?.next = next
 		next?.prev = prev
-		if n === head { head = next }
-		if n === tail { tail = prev }
+		if node === head { head = next }
+		if node === tail { tail = prev }
 
 		count -= 1
 		mutationCounter += 1

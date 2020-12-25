@@ -10,6 +10,7 @@ struct Day09: Day {
 	static let name = "Encoding Error"
 	private let numbers: [Int]
 	private var invalidNumber = 0
+	var preamble = 25
 
 	init(input: Input) {
 		numbers = input.lines.compactMap(\.integer)
@@ -30,7 +31,7 @@ extension Day09 {
 	mutating func part1() -> Any {
 		logPart("What is the first number that does not have this property?")
 
-		invalidNumber = check(sequence: numbers, history: 25) ?? 0
+		invalidNumber = check(sequence: numbers, history: preamble) ?? 0
 		return invalidNumber
 	}
 }
