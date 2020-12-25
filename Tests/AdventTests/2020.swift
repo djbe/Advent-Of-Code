@@ -391,13 +391,11 @@ final class Test2020: XCTestCase, AdventTester {
 	}
 
 	func testDay25() {
-		test(day: Day25.self) { day in
-			XCTAssertEqual(String(describing: day.part1()), "0")
-			XCTAssertEqual(String(describing: day.part2()), "0")
+		test(day: Day25.self, input: "5764801\n17807724") { day in
+			XCTAssertEqual(String(describing: day.part1()), "14897079")
 		}
 		normal(day: Day25.self) { day in
-			XCTAssertEqual(String(describing: day.part1()), "0")
-			XCTAssertEqual(String(describing: day.part2()), "0")
+			XCTAssertEqual(String(describing: day.part1()), "9714832")
 		}
 		waitUntilDone()
 	}

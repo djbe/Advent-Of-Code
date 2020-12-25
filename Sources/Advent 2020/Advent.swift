@@ -15,7 +15,7 @@ public struct Advent2020: Advent {
 		Day06.self, Day07.self, Day08.self, Day09.self, Day10.self,
 		Day11.self, Day12.self, Day13.self, Day14.self, Day15.self,
 		Day16.self, Day17.self, Day18.self, Day19.self, Day20.self,
-		Day21.self, Day22.self, Day23.self, Day24.self
+		Day21.self, Day22.self, Day23.self, Day24.self, Day25.self
 	]
 
 	@Argument public var day: Int = Self.days.count
